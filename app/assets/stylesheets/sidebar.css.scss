@@ -1,0 +1,15 @@
+@import 'base';
+.info-block {
+  @include content-block;
+  .body {
+    padding: 18px;
+  }
+}
+
+.popular-records {
+  padding: 10px !important;
+  .well {
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+}

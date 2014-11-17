@@ -1,0 +1,15 @@
+@media (min-width: 320px) and (max-width: 767px) {
+
+  .icon-bar{
+    text-align: center;
+    list-style: none;
+    font-size: 23px;
+    li {
+      float: left;
+      margin-left: 20%;
+    }
+  }
+}
+.icon-bar {
+  font-size: 18px;
+}

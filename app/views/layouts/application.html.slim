@@ -1,0 +1,74 @@
+doctype html
+html ng-app='blog'
+head
+title Quolpr's blog
+meta name="viewport" content="width=device-width, initial-scale=1.0"
+= stylesheet_link_tag    "application", :media => "all"
+= javascript_include_tag "application"
+= csrf_meta_tags
+
+body
+  .navbar.navbar-default.navbar-static-top#top role="navigation"
+    .container
+      .navbar-header
+        button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand quolpr
+      .navbar-collapse.collapse.out
+        ul.nav.navbar-nav
+          li.active
+            a ui-sref='blog' Блог
+          li
+            a ui-sref='about_me' Обо мне
+          li
+            a ui-sref='links' Контакты
+          li
+            a ui-sref='contact' Связаться
+
+        form.navbar-form.navbar-right
+          .form-group style='display:inline;'
+            .input-group
+              input.form-control type ='text' placeholder='Search...'
+              span.input-group-addon
+                a href=''
+        ul.nav.navbar-nav.navbar-right.icon-bar.hidden-sm
+          li
+            a href=''
+              
+          li
+            a href=''
+              
+          li
+            a href=''
+              
+
+  .container
+    .row
+      .col-xs-12.col-sm-8.col-md-8.col-lg-8
+        div ng-view=''
+      .col-xs-12.col-sm-4.col-md-4.col-lg-4
+        .info-block
+          h4.header
+            |Subscribe
+          .body
+            .form-group
+              input.form-control type='text' name='email' placeholder='Email address'
+            .form-group
+              input.form-control type='submit' value='Подписаться'
+        .info-block
+          h4.header
+            |Популярные записи
+          .body.popular-records
+            .well
+              |Лалала
+            .well
+              |УЛалала
+            .well
+              |УЛалала
+            .well
+              |УЛалала
+            .well
+              |УЛалала
