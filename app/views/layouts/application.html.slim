@@ -17,58 +17,32 @@ body
           span.icon-bar
           span.icon-bar
         a.navbar-brand quolpr
-      .navbar-collapse.collapse.out
+      .navbar-collapse.collapse.out ng-controller="NavController"
         ul.nav.navbar-nav
-          li.active
-            a ui-sref='blog' Блог
-          li
-            a ui-sref='about_me' Обо мне
-          li
-            a ui-sref='links' Контакты
-          li
-            a ui-sref='contact' Связаться
+          li ng-class="{ active: isActive('/')}"
+            a  ui-sref='post_list' Блог
+          li ng-class="{ active: isActive('/about_me')}"
+            a  ui-sref='about_me' Обо мне
 
         form.navbar-form.navbar-right
           .form-group style='display:inline;'
             .input-group
               input.form-control type ='text' placeholder='Search...'
-              span.input-group-addon
-                a href=''
+              a.input-group-addon href=''
+	            i.fa.fa-search
         ul.nav.navbar-nav.navbar-right.icon-bar.hidden-sm
           li
-            a href=''
-              
+            a href='https://vk.com/id131846116'
+              i.fa.fa-vk
           li
-            a href=''
-              
+            a href='https://github.com/quolpr'
+              i.fa.fa-github
           li
-            a href=''
-              
+            a href='https://plus.google.com/u/1/105239361881846780477/posts'
+              i.fa.fa-google-plus
 
   .container
-    .row
-      .col-xs-12.col-sm-8.col-md-8.col-lg-8
-        div ng-view=''
-      .col-xs-12.col-sm-4.col-md-4.col-lg-4
-        .info-block
-          h4.header
-            |Subscribe
-          .body
-            .form-group
-              input.form-control type='text' name='email' placeholder='Email address'
-            .form-group
-              input.form-control type='submit' value='Подписаться'
-        .info-block
-          h4.header
-            |Популярные записи
-          .body.popular-records
-            .well
-              |Лалала
-            .well
-              |УЛалала
-            .well
-              |УЛалала
-            .well
-              |УЛалала
-            .well
-              |УЛалала
+    .row 
+      div ui-view='main_content'
+      div ui-view='sidebar'
+      

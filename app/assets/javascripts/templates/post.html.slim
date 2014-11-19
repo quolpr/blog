@@ -1,0 +1,12 @@
+.col-xs-12.col-sm-12.col-md-12.col-lg-12
+  .blog-post
+    h2.header
+      |{{post.title}}
+    .body ng-bind-html='post.post | to_trusted'
+    .info
+      .fa.fa-clock-o
+      abbr title="{{post.date}}"
+        |{{post.date | date : 'medium'}}
+      .fa.fa-tags
+      .tag ng-repeat='tag in post.tags'
+        a href='#tag/{{tag.path}}_{{tag.id}}' {{tag.name}}

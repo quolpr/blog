@@ -1,0 +1,16 @@
+.col-xs-12.col-sm-8.col-md-8.col-lg-8
+  .blog-post ng-repeat='post in posts.posts'
+    h2.header
+      |{{post.title}}
+    .body ng-bind-html='post.post | to_trusted'
+    .rdmore
+      a href='#/post/{{post.path}}_{{post.id}}' READ MORE
+    .info
+      .fa.fa-clock-o
+      abbr title="{{post.date}}"
+        |{{post.date | date : 'medium'}}
+      .fa.fa-tags
+      .tag ng-repeat='tag in post.tags'
+        a href='#tag/{{tag.path}}_{{tag.id}}' {{tag.name}}
+
+//pagination total-items="posts.count" ng-model="navigation.currentPage" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="navigation.allPages" ng-change="navigation.pageChanged()"
