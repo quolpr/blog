@@ -45,5 +45,7 @@ group :production do
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
+  gem 'capistrano-bower'
   gem 'foreman'
+
 end

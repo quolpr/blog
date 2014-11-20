@@ -3,16 +3,17 @@ lock '3.2.1'
 
 set :application, 'blog'
 set :repo_url, 'git@github.com:quolpr/blog.git'
-set :rvm_ruby_version, '2.1.4'
 application = 'blog'
 set :rvm_type, :user
 set :deploy_to, '/var/www/apps/blog'
+set :bundle_cmd, "~/.rvm/gems/ruby-2.1.4@global/bin/bundle"
+set :bundle_dir, "~/.rvm/gems/ruby-2.1.4@global"
 
 namespace :foreman do
   desc 'Start server'
   task :start do
     on roles(:all) do
-      sudo "start #{application}"
+      #sudo "start #{application}"
     end
   end
 
@@ -128,7 +129,7 @@ namespace :deploy do
       execute  "mkdir -p #{foreman_temp}"
       # Создаем папку current для того, чтобы foreman создавал upstart файлы с правильными путями
       execute "ln -s #{release_path} #{current_path}"
-
+      
       within current_path do
         execute "cd #{current_path}"
         execute :bundle, "exec foreman export upstart #{foreman_temp} -a #{application} -u deployer -l /var/www/apps/#{application}/log -d #{current_path}"
