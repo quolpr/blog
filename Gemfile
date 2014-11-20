@@ -39,3 +39,11 @@ group :test, :development do
   gem "therubyracer"
 end
 
+group :production do
+  gem 'unicorn'
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+  gem 'foreman'
+end
