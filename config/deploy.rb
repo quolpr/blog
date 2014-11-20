@@ -13,28 +13,28 @@ namespace :foreman do
   desc 'Start server'
   task :start do
     on roles(:all) do
-      #sudo "start #{application}"
+      sudo "start #{application}-web"
     end
   end
 
   desc 'Stop server'
   task :stop do
     on roles(:all) do
-      sudo "stop #{application}"
+      sudo "stop #{application}-web"
     end
   end
 
   desc 'Restart server'
   task :restart do
     on roles(:all) do
-      sudo "restart #{application}"
+      sudo "restart #{application}-web"
     end
   end
 
   desc 'Server status'
   task :status do
     on roles(:all) do
-      execute "initctl list | grep #{application}"
+      execute "initctl list | grep #{application}-web"
     end
   end
 end
@@ -86,6 +86,7 @@ namespace :deploy do
   task :setup do
     on roles(:all) do
       execute "mkdir -p #{shared_path}/config/"
+      execute "mkdir -p /var/www/log"
       execute "mkdir -p /var/www/apps/#{application}/run/"
       execute "mkdir -p /var/www/apps/#{application}/log/"
       execute "mkdir -p /var/www/apps/#{application}/socket/"
@@ -143,7 +144,7 @@ namespace :deploy do
     on roles(:all) do
       within release_path do
           with rails_env: fetch(:rails_env) do
-            #execute :rake, "bower:install"
+            execute :rake, "bower:install"
           end
       end
     end
@@ -153,7 +154,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      sudo "restart #{application}"
+      sudo "restart #{application}-web"
     end
   end
 
@@ -161,7 +162,8 @@ namespace :deploy do
   after :finishing, 'deploy:restart'
 
   after  :updating, 'deploy:symlink'
-  after :updating, 'deploy:bower'
+  before  :compile_assets, 'deploy:bower'
+
 
   after :setup, 'deploy:foreman_init'
 
