@@ -3,7 +3,7 @@ lock '3.2.1'
 
 set :application, 'blog'
 set :repo_url, 'git@github.com:quolpr/blog.git'
-
+set :rvm_ruby_version, '2.1.4'
 application = 'blog'
 set :rvm_type, :user
 set :deploy_to, '/var/www/apps/blog'
@@ -88,7 +88,7 @@ namespace :deploy do
       execute "mkdir -p /var/www/apps/#{application}/run/"
       execute "mkdir -p /var/www/apps/#{application}/log/"
       execute "mkdir -p /var/www/apps/#{application}/socket/"
-      execute "mkdir -p #{shared_path}/system"
+      execute "mkdir -p  #{shared_path}/system"
 
       upload!('shared/database.yml', "#{shared_path}/config/database.yml")
       
