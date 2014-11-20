@@ -29,7 +29,6 @@ gem 'bower-rails'
 
 gem 'slim'
 gem 'angular-rails-templates'
-gem 'foreman'
 group :test, :development do
   gem "rspec"
   gem "rspec-rails", "~> 2.0"
