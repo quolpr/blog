@@ -1,4 +1,6 @@
 class AuthController < ApplicationController
+  attr_writer :authorizer
+
   def create
     if authorizer.admin? params[:username], params[:password]
       session[:admin] = true

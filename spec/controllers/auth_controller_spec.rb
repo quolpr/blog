@@ -3,31 +3,37 @@ require 'rails_helper'
 RSpec.describe AuthController, :type => :controller do
 
   describe "POST 'create'" do
-    def make_request(is_authed, status)
-      expect_any_instance_of(Authorizer).to receive(:admin?).once.with('manyrus', '111111').and_return(is_authed)
+    let(:authorizer){double(Authorizer)}
+
+    before(:each) {controller.authorizer = authorizer}
+
+    it 'check if user is admin' do
+      expect(authorizer).to receive(:admin?).with('manyrus', '111111')
       post :create, username: 'manyrus', password: '111111'
-      expect(session[:admin]).to eq is_authed
-      expect(response).to have_status status
     end
 
-    context 'good auth data' do
-      it 'auth user' do
-        make_request true, 200
-      end
+    context 'auth data valid' do
+      let(:authorizer){double(Authorizer, admin?: true)}
+      before{post :create}
+      it { should respond_with(:success) }
+      it { should set_session(:admin).to(true) }
     end
 
-    context 'bad auth data' do
-      it 'not auth user' do
-        make_request false, 401
-      end
+    context 'auth data not valid' do
+      let(:authorizer){double(Authorizer, admin?: false)}
+      before{post :create}
+      it { should respond_with(401) }
+      it { should set_session(:admin).to(false) }
     end
   end
 
   describe "DELETE 'destroy'" do
-    it 'change session admin to false' do
-      session[:admin] = true
-      expect{delete :destroy}.to change{session[:admin]}.from(true).to(false)
-    end
+    before{post :destroy}
+
+    it { should respond_with(200) }
+
+    it { should set_session(:admin).to(false) }
+
   end
 
 end

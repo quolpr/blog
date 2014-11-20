@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     session.has_key?(:admin) && session[:admin] == true
   end
 
-  def render_status status
+  def render_status(status)
     render status: status, nothing: true
   end
 
