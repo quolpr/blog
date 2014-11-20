@@ -22,5 +22,6 @@ module Blog
     config.assets.paths << Rails.root.join("vendor","assets","bower_components")
     config.assets.paths << Rails.root.join("vendor","assets","bower_components","font-awesome","fonts")
     config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff)$)
+    config.autoload_paths << Rails.root.join('lib')
   end
 end

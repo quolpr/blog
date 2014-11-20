@@ -14,10 +14,12 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+.idea
+
 
 /vendor
 /node_modules
-
+/config/app.yml
 /config/database.yml 
 /config/secrets.yml 
 /Procfile 

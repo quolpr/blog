@@ -14,8 +14,8 @@
  */
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
-@import "font-awesome/scss/font-awesome";
-@import "font-paths";
+@import "awesome_fix/font_awesome";
+@import "awesome_fix/font_paths";
 @import "base.css.scss";
 @import "font.css.scss";
 @import "header.css.scss";
