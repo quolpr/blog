@@ -23,11 +23,7 @@ class BlogPostsController < ApplicationController
   end
 
   def create
-    if is_admin?
-      @blog_post= BlogPost.create! blog_post_params
-    else
-      render_status 401
-    end
+    @blog_post= BlogPost.create! blog_post_params
   end
 
   private

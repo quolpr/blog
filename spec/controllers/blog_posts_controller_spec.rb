@@ -1,110 +1,137 @@
 require 'rails_helper'
 
+module Blog
+  class RecordNotFound < ActiveRecord::RecordNotFound
+    def initialize
+
+    end
+  end
+end
 describe BlogPostsController, :type => :controller do
 
-
   describe "GET 'index'" do
-    it 'should render template' do
-      get :index
-      expect(response).to render_template :index
+    def mock_select(limit:, offset:)
+      expect(BlogPost).to receive(:limit).with(limit).and_return(off = double)
+      expect(off).to receive(:offset).with(offset)
     end
 
-    it 'should get only necessary data' do
-      blog_posts = FactoryGirl.create_list(:blog_post_with_tags, 20)
-      get :index, offset:5, limit:4
-      expect(assigns(:blog_posts)).to eq blog_posts[5..8]
+    it "select BlogPost's by offset and limit" do
+      mock_select(limit:10, offset:20)
+      get :index, limit:10, offset:20
+    end
+
+    it "select BlogPost's by default" do
+      get :index, limit:10, offset:0
+    end
+
+    context 'all good' do
+      before {allow(BlogPost).to receive_message_chain(:limit, :offset)}
+      before {get :index}
+
+      it { should render_template('index') }
     end
   end
 
   describe "PUT 'update'" do
-    def update_post(id, name)
-      put(:update, id: id, blog_post: {name: name})
+    before(:each) {session[:admin] = true}
+    let(:stub_request){put :update, id:'10', blog_post:{name:'test'}}
+
+    it 'find post by id' do
+      expect(BlogPost).to receive(:find).with('10').and_return(spy)
+      stub_request
     end
 
-    it_behaves_like 'user not authed' do
-      let(:make_request){update_post 1, 'test'}
+    context 'post was not found' do
+      before{allow(BlogPost).to receive(:find)
+                                    .and_raise(ActiveRecord::RecordNotFound)}
+      before{stub_request}
+      it { should respond_with(404) }
     end
 
-    context 'user is authed' do
-      before :each do
-        session[:admin] = true
-      end
-
-      context 'good data' do
-        it 'should update post and return success response' do
-          post = FactoryGirl.create(:blog_post_with_tags)
-
-          expect {update_post(post.id, 'neww post')}.to change{BlogPost.find(post.id).name}.from(post.name).to('neww post')
-          expect(response).to be_success
-          expect(response).not_to render_template :update
-        end
-
-      end
-
-      context 'not valid data' do
-        it 'should render all validation errors' do
-          post = FactoryGirl.create(:blog_post_with_tags)
-          expect{update_post post.id, 'n'}.to_not change{BlogPost.find(post.id)}
-          expect(response).to have_status(400)
-          expect(assigns(:blog_post)).to eq post
-        end
-
-        context 'bad id' do
-          it 'should return 404 response' do
-            update_post 1000, 'newww post'
-            expect(response).to have_status(404)
-            expect(response).not_to render_template :update
-          end
-        end
-      end
+    it 'update attributes' do
+      allow(BlogPost).to receive(:find).and_return(post = double)
+      expect(post).to receive(:update_attributes!).with({name: 'test'})
+      stub_request
     end
 
+    context 'not valid data' do
+      before do
+        allow(BlogPost).to receive_message_chain('find.update_attributes!')
+                               .and_raise(Blog::RecordNotFound)
+      end
+      before {stub_request}
+      it { should respond_with(404) }
+    end
+
+    context 'all good' do
+      before {allow(BlogPost).to receive_message_chain('find.update_attributes!')}
+      before {stub_request}
+
+      it { should respond_with(200) }
+    end
+
+    it_behaves_like 'user not authed'
   end
 
   describe "DELETE 'destroy'" do
-    it_behaves_like 'user not authed' do
-      let(:make_request){delete :destroy, id: 2}
+    before(:each) {session[:admin] = true}
+    let(:stub_request){delete :destroy, id:'10'}
+
+    it 'find blog post' do
+      expect(BlogPost).to receive(:find).with('10').and_return(spy)
+      stub_request
     end
-    context 'user is authed' do
-      before :each do
-        session[:admin] = true
+
+    context 'blog not found' do
+      before do
+        allow(BlogPost).to receive_message_chain('find.destroy')
+                               .and_raise(Blog::RecordNotFound)
       end
 
-      context 'id is valid' do
-        it 'delete record' do
-          post = FactoryGirl.create(:blog_post_with_tags)
-          expect{delete :destroy, id:post.id}.to change{BlogPost.count}.by(-1)
-          expect(response).to have_status 200
-        end
-      end
+      before {stub_request}
 
-      context 'id is not valid' do
-        it 'should return 404 error' do
-          expect{delete :destroy, id: 1000}.not_to change{BlogPost.count}
-          expect(response).to have_status 404
-        end
-      end
+      it { should respond_with(404) }
     end
+
+    it 'destroy post' do
+      allow(BlogPost).to receive(:find).and_return(off = double)
+      expect(off).to receive(:destroy)
+      stub_request
+    end
+
+    context 'all good' do
+      before {allow(BlogPost).to receive_message_chain('find.destroy')}
+      before {stub_request}
+
+      it { should respond_with(200) }
+    end
+
+    it_behaves_like 'user not authed'
 
   end
 
   describe "GET 'show'" do
-    context 'bad id' do
-      it 'return 404 error' do
-        get :show, id: 1000
-        expect(response).to have_status(404)
-      end
+    let(:stub_request){get :show, id:'10'}
+
+    it 'find post' do
+      expect(BlogPost).to receive(:find).with('10')
+      stub_request
     end
 
-    context 'good id' do
-      it 'return http success' do
-        post = FactoryGirl.create(:blog_post_with_tags)
-        get :show, id: post.id
-        expect(response).to be_success
-        expect(assigns(:blog_post)).to eq post
+    context 'not found' do
+      before do
+        allow(BlogPost).to receive(:find).and_raise(Blog::RecordNotFound)
       end
+      before {stub_request}
+      it { should respond_with(404) }
     end
 
+    context 'all good' do
+      before {allow(BlogPost).to receive(:find)}
+      before {stub_request}
+
+      it { should render_template('show') }
+    end
   end
 
   describe "POST 'create'" do

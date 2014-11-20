@@ -1,4 +1,5 @@
  Что нужно сделать:
+   ☐ Убрать дублирование в blog_controller_spec(not_found)
    ☐ Живой поиск
    ☐ Скрытие сайдбара при просмотре поста
    ☐ http://stackoverflow.com/questions/25159802/upstart-task-generated-by-foreman-doesnt-find-file - написать статью про это
