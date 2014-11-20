@@ -139,6 +139,16 @@ namespace :deploy do
     end
   end
 
+  task :bower do
+    on roles(:all) do
+      within release_path do
+          with rails_env: fetch(:rails_env) do
+            #execute :rake, "bower:install"
+          end
+      end
+    end
+  end
+
 
   desc 'Restart application'
   task :restart do
@@ -150,7 +160,8 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   after :finishing, 'deploy:restart'
 
-  after :updating, 'deploy:symlink'
+  after  :updating, 'deploy:symlink'
+  after :updating, 'deploy:bower'
 
   after :setup, 'deploy:foreman_init'
 
