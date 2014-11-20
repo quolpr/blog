@@ -29,6 +29,7 @@ gem 'bower-rails'
 
 gem 'slim'
 gem 'angular-rails-templates'
+gem 'foreman'
 group :test, :development do
   gem "rspec"
   gem "rspec-rails", "~> 2.0"
@@ -45,5 +46,5 @@ group :production do
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
-  gem 'foreman'
+
 end
