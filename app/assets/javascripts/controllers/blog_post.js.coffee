@@ -14,5 +14,4 @@ angular.module('blogModule').controller('BlogPostController',
       }
       
       $scope.post = post
-      console.log("oj!")
 ])

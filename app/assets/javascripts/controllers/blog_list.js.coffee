@@ -29,5 +29,4 @@ angular.module('blogModule').controller('BlogListController',
         count: 2
       }
       $scope.posts = posts
-      console.log("oj!")
 ])
