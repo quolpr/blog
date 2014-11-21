@@ -6,7 +6,7 @@
     .info
       .fa.fa-clock-o
       abbr title="{{post.date}}"
-        |{{post.date | date : 'medium'}}
+        |{{post.created_at | date : 'medium'}}
       .fa.fa-tags
       .tag ng-repeat='tag in post.tags'
         a href='#tag/{{tag.path}}_{{tag.id}}' {{tag.name}}
