@@ -1,4 +1,4 @@
-angular.module('blogModule').controller('BlogPostController',
+angular.module('blogModule').controller('ShowController',
   ["$scope",
     ($scope) ->
       post = {

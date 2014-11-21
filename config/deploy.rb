@@ -13,28 +13,28 @@ namespace :foreman do
   desc 'Start server'
   task :start do
     on roles(:all) do
-      sudo "start #{application}-web"
+      sudo "start #{application}"
     end
   end
 
   desc 'Stop server'
   task :stop do
     on roles(:all) do
-      sudo "stop #{application}-web"
+      sudo "stop #{application}"
     end
   end
 
   desc 'Restart server'
   task :restart do
     on roles(:all) do
-      sudo "restart #{application}-web"
+      sudo "restart #{application}"
     end
   end
 
   desc 'Server status'
   task :status do
     on roles(:all) do
-      execute "initctl list | grep #{application}-web"
+      execute "initctl list | grep #{application}"
     end
   end
 end
@@ -155,7 +155,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      sudo "restart #{application}-web"
+      sudo "restart #{application}"
     end
   end
 

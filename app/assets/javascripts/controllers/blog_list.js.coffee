@@ -1,4 +1,4 @@
-angular.module('blogModule').controller('BlogListController',
+angular.module('blogModule').controller('ListController',
   ["$scope",
     ($scope) ->
       posts = {
