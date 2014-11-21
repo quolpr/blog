@@ -1,4 +1,5 @@
-angular.module('blogModule').controller('NavController',
+angular.module('blog.common')
+.controller('NavController',
   ["$scope", "$location",
     ($scope, $location)->
       $scope.isActive =  (viewLocation) ->

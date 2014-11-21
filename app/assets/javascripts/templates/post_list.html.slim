@@ -1,5 +1,5 @@
 .col-xs-12.col-sm-8.col-md-8.col-lg-8
-  .blog-post ng-repeat='post in posts.posts'
+  .blog-post ng-repeat='post in posts'
     h2.header
       |{{post.title}}
     .body ng-bind-html='post.post | to_trusted'

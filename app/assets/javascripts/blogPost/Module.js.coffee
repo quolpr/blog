@@ -1,8 +1,10 @@
-blogPost = angular.module('blogPostModule', [])
+blogPost = angular.module('blog.blogPost', [
+  'ui.router',
+  'templates'
+])
 
 blogPost.config([ '$stateProvider', '$urlRouterProvider',
   ($stateProvider, $urlRouterProvider)->
-    $urlRouterProvider.otherwise("/");
     $stateProvider
       .state('post_list', {
         url: "/",
@@ -16,12 +18,12 @@ blogPost.config([ '$stateProvider', '$urlRouterProvider',
           }
         }
       })
-      .state('read_post', {
+      .state('show_post', {
         url: "/post/{path}_{id:[0-9]}",
         views: {
           'main_content': {
             templateUrl: 'post.html',
-            controller: 'BlogPostController'
+            controller: 'BlogShowController'
           }
           
         }
