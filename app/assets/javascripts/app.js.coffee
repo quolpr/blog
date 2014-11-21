@@ -23,3 +23,24 @@ blog.config([ '$stateProvider', '$urlRouterProvider',
         }
       })
 ])
+was_animated = false
+blog.run(['$rootScope', '$urlRouter', '$location', '$state', ($rootScope, $urlRouter, $location, $state)->
+  $rootScope.$on('$stateChangeStart',
+    (event, toState, toParams, fromState, fromParams) =>
+      firstVisit = fromState.name.length == 0
+      sideBarShown = toState.views.sidebar == undefined and fromState.views.sidebar
+      return if was_animated || firstVisit || sideBarShown
+      event.preventDefault()
+
+      $('div[ui-view="sidebar"] > div').hide('slow')
+      $('div[ui-view="main_content"] > div').animate({
+        width: $('.container').width()
+      }, 1000, =>
+        was_animated = true
+        $state.go(toState, toParams)
+        was_animated = false
+      )
+      #$('div[ui-view="sidebar"] > div').animate({width:'toggle'},350);
+
+  )
+])
