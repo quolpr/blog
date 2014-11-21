@@ -1,6 +1,7 @@
 blogPost = angular.module('blog.blogPost', [
   'ui.router',
-  'templates'
+  'templates',
+  'ngProgress'
 ])
 
 blogPost.config([ '$stateProvider', '$urlRouterProvider',

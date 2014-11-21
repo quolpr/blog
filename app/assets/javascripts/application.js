@@ -19,4 +19,5 @@
 //= require bootstrap-sass-official/assets/javascripts/bootstrap
 //= require blogPost/Module
 //= require common/Module
+//= require ngprogress/build/ngProgress
 //= require_tree .
