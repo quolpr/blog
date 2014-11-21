@@ -13,7 +13,6 @@
 //= require jquery/dist/jquery
 //= require jquery-ui/jquery-ui
 //= require angular/angular
-//= require angular-resource/angular-resource
 //= require angular-rails-templates
 //= require angular-ui-router/release/angular-ui-router
 //= require bootstrap-sass-official/assets/javascripts/bootstrap-sprockets
