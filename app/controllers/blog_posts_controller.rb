@@ -5,6 +5,7 @@ class BlogPostsController < ApplicationController
     @blog_posts = BlogPost
                       .limit(limit)
                       .offset(offset)
+                      .order('id DESC')
   end
 
   def update
