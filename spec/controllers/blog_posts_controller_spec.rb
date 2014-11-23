@@ -135,10 +135,15 @@ describe BlogPostsController, :type => :controller do
   end
 
   describe "POST 'create'" do
-    it_behaves_like 'user not authed' do
-      let(:make_request){post :create}
+    let(:stub_request){post :create, blog_post: {name: 'rr', post:'ff', tags_attributes:[{name: 'ds'}]}}
+    before(:each) {session[:admin] = true}
+    it_behaves_like 'user not authed'
+    
+    context 'not valida data' do
+      before{
+        expect(BlogPost).to receive(:create!).and_raise()
+      }
     end
-
     context 'authed' do
       before :each do
         session[:admin] = true

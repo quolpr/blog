@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :blog_post do
-    sequence(:name){|n| "tiitle##{n}"}
-    post          'some posthhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
-
+    sequence(:title){|n| "tiitle##{n}"}
+    post 'some posthhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
+    path 'titttttle'
 
 
     factory :blog_post_with_tags do
