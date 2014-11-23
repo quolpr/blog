@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AuthController, :type => :controller do
+RSpec.describe AuthController, :unit, :type => :controller do
 
   describe "POST 'create'" do
     let(:authorizer){double(Authorizer)}

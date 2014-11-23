@@ -4,3 +4,6 @@
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
+RSpec::Core::RakeTask.new(:unit) do |t|
+  t.rspec_opts = "--tag unit"
+end
