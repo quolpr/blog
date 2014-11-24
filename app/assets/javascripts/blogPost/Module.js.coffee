@@ -29,4 +29,13 @@ blogPost.config([ '$stateProvider', '$urlRouterProvider',
           
         }
       })
+      .state('create_post', {
+        url: "/post/create",
+        views: {
+          'main_content': {
+            templateUrl: 'create_post.html',
+            controller:  'BlogCreateController'
+          }
+        }
+      })
 ])
