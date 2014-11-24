@@ -1,3 +1,5 @@
 form
   .form-group
-    input type="text" class="form-control" name="title" ng-model="blog.title" required
+    input type="text" class="form-control" name="title" ng-model="post.title" required
+  .form-group
+    textarea ng-model="post.post" ckeditor=''

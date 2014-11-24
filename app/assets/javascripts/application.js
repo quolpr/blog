@@ -6,7 +6,7 @@
 //
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // compiled file.
-//
+//З
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
@@ -17,7 +17,12 @@
 //= require angular-ui-router/release/angular-ui-router
 //= require bootstrap-sass-official/assets/javascripts/bootstrap-sprockets
 //= require bootstrap-sass-official/assets/javascripts/bootstrap
+//= require ngprogress/build/ngProgress
+//= require ckeditor/ckeditor
+//= require ng-ckeditor/ng-ckeditor
+
+
 //= require blogPost/Module
 //= require common/Module
-//= require ngprogress/build/ngProgress
+
 //= require_tree .

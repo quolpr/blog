@@ -1,11 +1,13 @@
 angular.module('blog.blogPost')
 .controller('BlogCreateController',
-["$scope", "BlogPost", "ngProgress", ($scope, blogPost, ngProgress) ->
-  ngProgress.start()
-  blogPost.loadAll().then(
-    (data)->
-      $scope.posts = data.data.blog_posts
-      ngProgress.complete()
-  )
+["$scope", "BlogPost", "ngProgress", '$interval', ($scope, blogPost, ngProgress, $interval) ->
+  $scope.post = {
+    title: '',
+    post: ''
+  }
+  $interval(->
+    console.log($scope.post)
+  , 1000)
+
 ])
 
