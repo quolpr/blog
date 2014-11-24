@@ -37,12 +37,9 @@ group :test, :development do
   gem 'selenium-webdriver'
   gem 'therubyracer'
   gem 'shoulda-matchers'
-end
-
-group :test do
+  gem 'teaspoon'
   gem 'poltergeist'
 end
-
 group :production do
   gem 'unicorn'
   gem 'capistrano'

@@ -7,12 +7,12 @@ class BlogPostsController < ApplicationController
                       .offset(offset)
                       .order('id DESC')
   end
-
+ 
   def update
     @blog_post = BlogPost.find(params[:id])
     @blog_post.update_attributes! blog_post_params
     render_status 200
-  end
+  end   
 
   def destroy
     BlogPost.find(params[:id]).destroy
@@ -29,6 +29,6 @@ class BlogPostsController < ApplicationController
 
   private
   def blog_post_params
-    params.require(:blog_post).permit(:name, :post, tags_attributes:[:name])
+    params.require(:blog_post).permit(:title, :post, tags_attributes:[:name, :path])
   end
 end

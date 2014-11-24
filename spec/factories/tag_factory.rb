@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :tag do
     sequence(:name){|n| "tag ##{n}"}
-
+    path 'tittttlte'
     factory :bad_tag do
       name 'n'
     end

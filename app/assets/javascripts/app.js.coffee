@@ -21,5 +21,6 @@ blog.config([ '$stateProvider', '$urlRouterProvider',
             templateUrl: 'about_me.html'
           }
         }
+
       })
 ])

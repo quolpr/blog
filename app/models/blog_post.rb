@@ -9,6 +9,7 @@ class BlogPost < ActiveRecord::Base
             }, uniqueness: {
               message: ValidationError::NOT_UNIQUE
             }
+  validates :path, length: {minimum: 5, too_short: ValidationError::TOO_SHORT}
   validates_presence_of :tags
   accepts_nested_attributes_for :tags
 

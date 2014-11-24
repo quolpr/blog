@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe HomePageController, :type => :controller do
+RSpec.describe HomePageController, :unit, :type => :controller do
 
 end
