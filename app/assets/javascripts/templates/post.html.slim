@@ -2,7 +2,7 @@
   .blog-post
     h2.header
       |{{post.title}}
-    .body ng-bind-html='post.post | to_trusted'
+    .body btf-markdown='post.post'
     .info
       .fa.fa-clock-o
       abbr title="{{post.date}}"

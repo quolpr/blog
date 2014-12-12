@@ -2,7 +2,7 @@ blogPost = angular.module('blog.blogPost', [
   'ui.router',
   'templates',
   'ngProgress',
-  'ngCkeditor'
+  'btford.markdown'
 ])
 
 blogPost.config([ '$stateProvider', '$urlRouterProvider',

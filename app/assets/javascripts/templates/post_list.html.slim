@@ -2,7 +2,7 @@
   .blog-post ng-repeat='post in posts'
     h2.header
       |{{post.title}}
-    .body ng-bind-html='post.post | to_trusted'
+    .body btf-markdown='post.post'
     .rdmore
       a href='#/post/{{post.path}}_{{post.id}}' READ MORE
     .info

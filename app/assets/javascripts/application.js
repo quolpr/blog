@@ -18,8 +18,9 @@
 //= require bootstrap-sass-official/assets/javascripts/bootstrap-sprockets
 //= require bootstrap-sass-official/assets/javascripts/bootstrap
 //= require ngprogress/build/ngProgress
-//= require ckeditor/ckeditor
-//= require ng-ckeditor/ng-ckeditor
+//= require angular-sanitize/angular-sanitize
+//= require showdown/src/showdown
+//= require angular-markdown-directive/markdown
 
 
 //= require blogPost/Module
