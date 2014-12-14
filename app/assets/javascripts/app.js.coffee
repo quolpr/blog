@@ -4,13 +4,14 @@
 
 blog = angular.module('blog', [
   'blog.blogPost',
+  'blog.auth',
   'ui.router',
   'templates',
   'blog.common'
 ])    
 
 
-blog.config([ '$stateProvider', '$urlRouterProvider',
+blog.config [ '$stateProvider', '$urlRouterProvider',
   ($stateProvider, $urlRouterProvider)->
     $urlRouterProvider.otherwise("/");
     $stateProvider
@@ -23,4 +24,8 @@ blog.config([ '$stateProvider', '$urlRouterProvider',
         }
 
       })
-])
+]
+
+blog.config ['$httpProvider', ($httpProvider)->
+  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+]

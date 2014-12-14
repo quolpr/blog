@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery/dist/jquery
-//= require jquery-ui/jquery-ui
 //= require angular/angular
 //= require angular-rails-templates
 //= require angular-ui-router/release/angular-ui-router
@@ -21,9 +20,13 @@
 //= require angular-sanitize/angular-sanitize
 //= require showdown/src/showdown
 //= require angular-markdown-directive/markdown
-
+//= require angular-bootstrap/ui-bootstrap
+//= require angular-bootstrap/ui-bootstrap-tpls
+//= require ui-router-extras/release/ct-ui-router-extras
+//= require angular-cookies/angular-cookies
 
 //= require blogPost/Module
+//= require auth/Module
 //= require common/Module
 
 //= require_tree .
