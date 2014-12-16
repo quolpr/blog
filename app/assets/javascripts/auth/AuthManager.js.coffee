@@ -1,13 +1,32 @@
 angular.module('blog.auth')
-.factory('AuthManager', ['$http',($http) ->
-  BlogPost = (blogPostData)->
-    #some methods
+.factory('AuthManager', ['$http', '$cookieStore', '$q', ($http, $cookieStore, $q) ->
 
-  BlogPost.prototype = {
+  class AuthManager
+    constructor: ()->
+      if $cookieStore.get('isAuthed') == undefined
+        this.setIsAuthed(false)
+
+    setIsAuthed: (flag) ->
+      $cookieStore.put('isAuthed', flag)
+
+    isAuthed: () ->
+      $cookieStore.get('isAuthed') 
+
     login: (username, password) ->
-      $http.post("/auth", {username:username, password:password})
+      $q (resolve, reject, notify)=>
+        $http.post("/auth", {username:username, password:password}).then(
+          (data)=>
+            this.setIsAuthed(true)
+            resolve(data)
+          (data)->
+            reject(data)
+          (data)->
+            notify(data)
+        )
+        
     logout: () ->
+      this.setIsAuthed(false)
       $http.delete("/auth")
-  }
-  new BlogPost
+
+  new AuthManager()
 ])

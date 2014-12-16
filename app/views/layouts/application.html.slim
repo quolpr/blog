@@ -1,49 +1,60 @@
 doctype html
 html ng-app='blog'
-head
-title Quolpr's blog
-meta name="viewport" content="width=device-width, initial-scale=1.0"
-= stylesheet_link_tag    "application", :media => "all"
-= javascript_include_tag "application"
-= csrf_meta_tags
+  head
+    title Quolpr's blog
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+  = stylesheet_link_tag    "application", :media => "all"
+  = javascript_include_tag "application"
+  = csrf_meta_tags
 
-body ng-cotroller='UserController'
 
-  .navbar.navbar-default.navbar-static-top#top role="navigation"
+
+  body ng-controller="AuthController"
+    .navbar.navbar-default.navbar-static-top#top role="navigation"
+      .container
+        .navbar-header
+          button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand quolpr
+        .navbar-collapse.collapse.out ng-controller="NavController"
+          ul.nav.navbar-nav
+            li ng-class="{ active: isActive('/')}"
+              a  ui-sref='post_list' Блог
+            li ng-class="{ active: isActive('/about_me')}"
+              a  ui-sref='about_me' Обо мне
+
+          form.navbar-form.navbar-right
+            .form-group style='display:inline;'
+              .input-group
+                input.form-control type ='text' placeholder='Search...'
+                  a.input-group-addon href=''
+  	                i.fa.fa-search
+          ul.nav.navbar-nav.navbar-right.icon-bar.hidden-sm
+            li
+              a ui-sref='auth'
+                i.fa.fa-vk
+            li
+              a href='https://github.com/quolpr'
+                i.fa.fa-github
+            li
+              a href='https://plus.google.com/u/1/105239361881846780477/posts'
+                i.fa.fa-google-plus
+
+    
+
     .container
-      .navbar-header
-        button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
-          span.sr-only Toggle navigation
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        a.navbar-brand quolpr
-      .navbar-collapse.collapse.out ng-controller="NavController"
-        ul.nav.navbar-nav
-          li ng-class="{ active: isActive('/')}"
-            a  ui-sref='post_list' Блог
-          li ng-class="{ active: isActive('/about_me')}"
-            a  ui-sref='about_me' Обо мне
-
-        form.navbar-form.navbar-right
-          .form-group style='display:inline;'
-            .input-group
-              input.form-control type ='text' placeholder='Search...'
-              a.input-group-addon href=''
-	            i.fa.fa-search
-        ul.nav.navbar-nav.navbar-right.icon-bar.hidden-sm
-          li
-            a ui-sref='auth'
-              i.fa.fa-vk
-          li
-            a href='https://github.com/quolpr'
-              i.fa.fa-github
-          li
-            a href='https://plus.google.com/u/1/105239361881846780477/posts'
-              i.fa.fa-google-plus
-
-  .container
-    .row 
-      div ui-view='main_content'
-      div ui-view='sidebar'
+      div.hide active-class="alert show" flash-alert="success"
+        strong.alert-heading Success!
+        span.alert-message  
+          |{{flash.message}}
+      div.hide active-class="alert show" flash-alert="error"
+        strong.alert-heading Error!
+        span.alert-message 
+          |{{flash.message}}
+      .row 
+        div ui-view='main_content'
+        div ui-view='sidebar'
       

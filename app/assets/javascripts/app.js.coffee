@@ -7,7 +7,9 @@ blog = angular.module('blog', [
   'blog.auth',
   'ui.router',
   'templates',
-  'blog.common'
+  'blog.common',
+  'angular-flash.service', 
+  'angular-flash.flash-alert-directive'
 ])    
 
 

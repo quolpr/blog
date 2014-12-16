@@ -24,6 +24,7 @@
 //= require angular-bootstrap/ui-bootstrap-tpls
 //= require ui-router-extras/release/ct-ui-router-extras
 //= require angular-cookies/angular-cookies
+//= require angular-flash/dist/angular-flash
 
 //= require blogPost/Module
 //= require auth/Module
