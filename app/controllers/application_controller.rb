@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: proc{render_status 404}
   rescue_from ActiveRecord::RecordInvalid,  with: proc{render_status 400}
 
+  layout false
+
   protected
   def limit
     params.has_key?(:limit) ? params[:limit].to_i : 10

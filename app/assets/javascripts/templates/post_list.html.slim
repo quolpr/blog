@@ -4,7 +4,7 @@
       |{{post.title}}
     .body btf-markdown='post.post'
     .rdmore
-      a href='#/post/{{post.path}}_{{post.id}}' READ MORE
+      a ui-sref='blog.post.show({path:post.path, id:post.id})' READ MORE
     .info
       .fa.fa-clock-o
       abbr title="{{post.date}}"

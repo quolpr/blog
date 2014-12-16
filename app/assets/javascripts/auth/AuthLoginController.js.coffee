@@ -10,7 +10,7 @@ auth.controller('AuthLoginController', ['$scope', 'AuthManager', '$state', 'flas
   actions.submit = ->
     authManager.login($scope.user.username, $scope.user.password).then(
       () ->
-        $state.go('post_list').then ()->
+        $state.go('blog.post.list').then ()->
           flash.success = 'You was authed'
       ,
       () ->

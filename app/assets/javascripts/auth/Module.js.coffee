@@ -8,15 +8,10 @@ auth = angular.module('blog.auth', [
 auth.config [ '$stateProvider', '$urlRouterProvider',
   ($stateProvider, $urlRouterProvider)->
     $stateProvider
-      .state('auth', {
-        url: '/auth',
-        views: {
-          'sidebar': {
-            templateUrl: 'sidebar.html'
-          }
-        }
+      .state('blog.auth', {
+        url: '/auth'
       })
-      .state('auth.login', {
+      .state('blog.auth.login', {
         url: "/login",
 
         views: {
@@ -27,16 +22,16 @@ auth.config [ '$stateProvider', '$urlRouterProvider',
         }
 
       })
-      .state('auth.logout', {
+      .state('blog.auth.logout', {
         url: "/logout"
       })
 ]
 
 auth.run ['$state', 'AuthManager', 'flash', '$rootScope', ($state, authManager, flash, $rootScope)->
   $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams)->
-    if toState.name == 'auth.logout'
+    if toState.name == 'blog.auth.logout'
       event.preventDefault()
       authManager.logout()
-      $state.go('post_list').then ->
+      $state.go('blog.post.list').then ->
         flash.success = 'You was logged out'
 ]

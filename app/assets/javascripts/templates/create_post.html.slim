@@ -1,7 +1,8 @@
-form
-  .form-group
-    input type="text" class="form-control" name="title" ng-model="post.title" required
-  .form-group
-    textarea.form-control rows='20' cols='32' ng-model="post.post" ng-change="markdown = post.post"
-div btf-markdown="markdown"
+.col-xs-12.col-sm-9.col-md-9.col-lg-9
+  form
+    .form-group
+      input type="text" class="form-control" name="title" ng-model="post.title" required
+    .form-group
+      textarea.form-control rows='20' cols='32' ng-model="post.post" ng-change="markdown = post.post"
+  div btf-markdown="markdown"
 

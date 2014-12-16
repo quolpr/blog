@@ -17,10 +17,21 @@ blog.config [ '$stateProvider', '$urlRouterProvider',
   ($stateProvider, $urlRouterProvider)->
     $urlRouterProvider.otherwise("/");
     $stateProvider
-      .state('about_me', {
+      .state('blog',
+        {
+          url: ''
+          views: {
+            'sidebar': {
+              templateUrl: 'sidebar.html'
+            }
+          }
+          abstract: true
+        }
+      )
+      .state('blog.about_me', {
         url: "/about_me",
         views: {
-          'main_content': {
+          'main_content@': {
             templateUrl: 'about_me.html'
           }
         }
