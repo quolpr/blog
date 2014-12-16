@@ -1,0 +1,26 @@
+#loginbox {
+  .panel-body {
+    padding-top: 15px;
+    padding-bottom: 5px;
+
+    .login-alert {
+      display: none;
+
+    }
+    .input-group {
+      &.user, &.password {
+        margin-bottom: 25px;
+      }
+      &.pass {
+        .input-group-addon {
+          padding-bottom: 3px !important;
+        }
+      }
+    }
+    .form-group {
+      margin-top:10px;
+
+    }
+  }
+
+}

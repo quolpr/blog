@@ -1,32 +1,23 @@
-
 #loginbox.mainbox.col-xs-12.col-sm-8.col-md-8.col-lg-8
   .panel.panel-info
     .panel-heading
       .panel-title Sign In
-    .panel-body style="padding-top:30px" 
-      #login-alert.alert.alert-danger.col-sm-12 style="display:none" 
-      form#loginform.form-horizontal role="form" 
-        .input-group style=("margin-bottom: 25px") 
+    .panel-body
+      .login-alert.alert.alert-danger.col-sm-12 
+      form.form-horizontal role="form" 
+        .input-group.user
           span.input-group-addon
-            i.glyphicon.glyphicon-user
-          input#login-username.form-control name="username" placeholder=("username or email") type="text" value="" /
-        .input-group style=("margin-bottom: 25px") 
+            i.fa.fa-user
+          input#login-username.form-control ng-model="user.username" placeholder=("username or email") required='' type="text" /
+        .input-group.pass
           span.input-group-addon
-            i.glyphicon.glyphicon-lock
-          input#login-password.form-control name="password" placeholder="password" type="password" /
+            i.fa.fa-lock
+          input.form-control ng-model="user.password" placeholder="password" type="password" required=''/
         .input-group
           .checkbox
             label
               input#login-remember name="remember" type="checkbox" value="1" /
               | Remember me
-        .form-group style="margin-top:10px" 
-          /! Button
-          .col-sm-12.controls
-            a#btn-login.btn.btn-success href="#"  Login
-            a#btn-fblogin.btn.btn-primary href="#"  Login with Facebook
         .form-group
-          .col-md-12.control
-            div style=("border-top: 1px solid#888; padding-top:15px; font-size:85%") 
-              | Don't have an account!
-              a href="#" onclick=("$('#loginbox').hide(); $('#signupbox').show()") 
-                | Sign Up Here
+          .col-xs-12.col-sm-8.col-md-8.col-lg-8.controls
+            a.btn.btn-default href="#" ng-click='actions.submit()' Login

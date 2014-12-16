@@ -1,7 +1,7 @@
 describe Authorizer, :unit do
 
   describe '#admin?' do
-    let(:config){{user: 'manyrus', password: '111111'}}
+    let(:config){{'user' => 'manyrus', 'password' => '111111'}}
     it 'parse config' do
       expect(YAML).to receive(:load_file).once.with('./config/app.yml').and_return(config)
       subject.admin? 't', 't'

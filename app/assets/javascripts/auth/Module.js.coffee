@@ -18,9 +18,11 @@ auth.config [ '$stateProvider', '$urlRouterProvider',
       })
       .state('auth.login', {
         url: "/login",
+
         views: {
           'main_content@': {
-            templateUrl:  'auth_login.html'
+            templateUrl:  'auth_login.html',
+            controller: 'AuthLoginController'
           }
         }
 

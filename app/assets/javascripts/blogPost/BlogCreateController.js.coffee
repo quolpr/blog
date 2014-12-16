@@ -5,9 +5,6 @@ angular.module('blog.blogPost')
     title: '',
     post: ''
   }
-  $interval(->
-    console.log($scope.post)
-  , 1000)
 
 ])
 
