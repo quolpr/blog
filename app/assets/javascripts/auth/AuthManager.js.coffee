@@ -1,5 +1,5 @@
 angular.module('blog.auth')
-.factory('AuthManager', ['$http', '$cookieStore', '$q', ($http, $cookieStore, $q) ->
+.factory('AuthManager', ['$http', '$cookieStore', '$q','$rootScope', ($http, $cookieStore, $q, $rootScope) ->
 
   class AuthManager
     constructor: ()->
@@ -17,6 +17,7 @@ angular.module('blog.auth')
         $http.post("/auth", {username:username, password:password}).then(
           (data)=>
             this.setIsAuthed(true)
+            $rootScope.$broadcast('auth.changed', {isAuthed: true})
             resolve(data)
           (data)->
             reject(data)
@@ -26,6 +27,7 @@ angular.module('blog.auth')
         
     logout: () ->
       this.setIsAuthed(false)
+      $rootScope.$broadcast('auth.changed', {isAuthed: false})
       $http.delete("/auth")
 
   new AuthManager()

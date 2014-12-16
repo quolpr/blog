@@ -1,7 +1,12 @@
-.col-xs-12.col-sm-4.col-md-4.col-lg-4 
-  .info-block.create_post ng-show='isAuthed()'
+.col-xs-12.col-sm-3.col-md-3.col-lg-3 
+  .info-block.create_post ng-hide='isAuthed'
+    a.btn.btn-default.btn-lg role='button' ui-sref='auth.login'
+      |Войти
+
+  .info-block.create_post ng-show='isAuthed'
     a.btn.btn-default.btn-lg role='button' href='#/post/create'
       |Создать пост
+  
   .info-block
     h4.header
       |Subscribe
@@ -24,3 +29,6 @@
         |УЛалала
       .well
         |УЛалала
+  .info-block.create_post ng-show='isAuthed'
+    a.btn.btn-default.btn-lg role='button' ui-sref='auth.logout'
+      |Выйти
