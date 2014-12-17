@@ -25,6 +25,7 @@
 //= require ui-router-extras/release/ct-ui-router-extras
 //= require angular-cookies/angular-cookies
 //= require angular-flash/dist/angular-flash
+//= require ngSmoothScroll/angular-smooth-scroll
 
 //= require blogPost/Module
 //= require auth/Module
