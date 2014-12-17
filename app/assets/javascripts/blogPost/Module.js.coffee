@@ -39,5 +39,8 @@ blogPost.config([ '$stateProvider', '$urlRouterProvider',
             controller:  'BlogCreateController'
           }
         }
+        data: {
+          usingAjax: false
+        }
       })
 ])

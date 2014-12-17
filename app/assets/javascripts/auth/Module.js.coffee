@@ -10,6 +10,7 @@ auth.config [ '$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('blog.auth', {
         url: '/auth'
+
       })
       .state('blog.auth.login', {
         url: "/login",
@@ -20,7 +21,10 @@ auth.config [ '$stateProvider', '$urlRouterProvider',
             controller: 'AuthLoginController'
           }
         }
-
+        
+        data: {
+          usingAjax: false
+        }
       })
       .state('blog.auth.logout', {
         url: "/logout"

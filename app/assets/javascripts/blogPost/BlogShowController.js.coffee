@@ -1,8 +1,8 @@
 angular.module('blog.blogPost')
 .controller('BlogShowController', ["$scope", "BlogPost", "$stateParams", "ngProgress",  ($scope, blogPost, $stateParams, ngProgress) ->
-  ngProgress.start()
+  $scope.loading = true
   blogPost.load($stateParams.id).success((data)->
     $scope.post = data
-    ngProgress.complete()
+    $scope.loading = false
   )
 ])
