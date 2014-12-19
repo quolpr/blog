@@ -27,7 +27,7 @@ gem 'bower-rails'
 gem 'slim'
 gem 'angular-rails-templates'
 gem 'rails_admin'
-
+gem 'draper'
 group :test, :development do
   gem 'rspec', '~> 3.1'
   gem 'rspec-rails'

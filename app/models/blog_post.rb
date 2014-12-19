@@ -23,6 +23,13 @@ class BlogPost < ActiveRecord::Base
     splitted_post[1] == nil ? splitted_post[0] : splitted_post[1]
   end
 
+  def create!(attributes = {}, &block)
+    if attributes[:tags].is_a? String  
+      attributes[:tags] =Tag.strToTags(attributes[:tags])
+    end
+    super(attributes, &block)
+  end
+
   private
 
   def splitted_post
