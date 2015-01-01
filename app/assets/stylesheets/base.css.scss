@@ -4,6 +4,13 @@
 
 body {
   background-color: #EFEFEF;
+  .main-content {
+    display: none;
+  }
+  .loading {
+    margin: 0 auto;
+    font-size: 20px;
+  }
 }
 
 @mixin content-block {

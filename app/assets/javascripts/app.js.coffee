@@ -72,6 +72,8 @@ blog.factory 'ProgressInterceptor', ['$injector', '$q', 'progressStatus', ($inje
 ]
 
 blog.run ['$rootScope', 'ngProgress', 'progressStatus', ($rootScope, ngProgress, progressStatus) ->
+  $('body .loading').hide()
+  $('body .main-content').show()
   complete = (data)->
     if data.useProgress
       progressStatus.isLoading = false
