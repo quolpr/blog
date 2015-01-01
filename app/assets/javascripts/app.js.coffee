@@ -71,9 +71,15 @@ blog.factory 'ProgressInterceptor', ['$injector', '$q', 'progressStatus', ($inje
   }
 ]
 
-blog.run ['$rootScope', 'ngProgress', 'progressStatus', ($rootScope, ngProgress, progressStatus) ->
-  $('body .loading').hide()
-  $('body .main-content').show()
+blog.run ['$rootScope', 'ngProgress', 'progressStatus', '$timeout', ($rootScope, ngProgress, progressStatus, $timeout) ->
+  $timeout(
+    ()-> 
+      $('body .loading').slideUp(1000)
+      $('body .main-content').show()
+      
+    ,1000
+  )
+  
   complete = (data)->
     if data.useProgress
       progressStatus.isLoading = false
@@ -90,7 +96,7 @@ blog.run ['$rootScope', 'ngProgress', 'progressStatus', ($rootScope, ngProgress,
     complete(toState.data) unless toState.data.usingAjax
   )
   $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams)->
-    start(toState.data)
+    start(toState.data) unless fromState.name == ""
   )
 
   

@@ -3,13 +3,28 @@
 }
 
 body {
-  background-color: #EFEFEF;
+  background-color: #EFEFEF !important;
   .main-content {
     display: none;
   }
   .loading {
-    margin: 0 auto;
+    position: absolute;
+    z-index: 10000;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 115px;
     font-size: 20px;
+    border-radius: 0px 0px 3px 3px;
+    border-right: solid 1px;
+    border-left: solid 1px;
+    border-bottom: solid 1px;
+    border-color: #e7e7e7;
+    background-color: #fff;
+    img{
+      margin-right: 3px;
+    }
   }
 }
 
