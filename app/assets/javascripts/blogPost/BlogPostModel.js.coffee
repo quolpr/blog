@@ -8,6 +8,8 @@ angular.module('blog.blogPost')
       $http.get("/blog_posts/#{id}")
     loadAll: (offset=0, count=10) ->
       $http.get("/blog_posts?offset=#{offset}&count=#{count}")
+    create: (title, post, tags) ->
+      $http.post("/blog_posts", {blog_post:{title:title, post:post, tags:tags}})
   }
   new BlogPost
 ])

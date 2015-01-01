@@ -1,5 +1,6 @@
 class Tag < ActiveRecord::Base
   has_and_belongs_to_many :blog_posts
+  before_validation :create_path
 
   validates :name,
             length: {
@@ -11,14 +12,13 @@ class Tag < ActiveRecord::Base
 
   def self.strToTags(tags)
     tags = normalize_tags(tags.split(','))
-    exist_tags = Tag.find(name:tags)
+    exist_tags = Tag.where(name:tags) || [] 
     not_exist_tags = []
     tags.each {|tag|
       first_found = exist_tags.detect{|el| el.name == tag}
       not_exist_tags << {name: tag} unless first_found.present?
     }
-    Tag.create not_exist_tags
-    exist_tags + not_exist_tags
+    exist_tags + (Tag.create(not_exist_tags) || [])
   end 
 
   private   
@@ -30,5 +30,9 @@ class Tag < ActiveRecord::Base
       .uniq
       .reject{|el| el.empty? || el == ','}
 
-  end         
+  end   
+
+  def create_path
+    self.path = name
+  end      
 end

@@ -40,6 +40,7 @@ group :test, :development do
   gem 'teaspoon'
   gem 'poltergeist'
 end
+
 group :production do
   gem 'unicorn'
   gem 'capistrano'

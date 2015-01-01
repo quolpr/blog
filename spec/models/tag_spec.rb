@@ -14,7 +14,7 @@ describe Tag, :unit do
     
     context 'parsing tags' do
       def check_it
-        expect(Tag).to receive(:find).with(name: ['test', 'tag']).and_return(result)
+        expect(Tag).to receive(:where).with(name: ['test', 'tag']).and_return(result)
         Tag.strToTags(tags)
       end
 
@@ -53,24 +53,21 @@ describe Tag, :unit do
 
     context 'tags exist'  do
       it 'use existence' do
-        expect(Tag).to receive(:find).with(name:['test', 'tag']).and_return(result)
+        expect(Tag).to receive(:where).with(name:['test', 'tag']).and_return(result)
         expect(Tag.strToTags(tags)).to eq result
       end
     end
 
     context 'some tags not exist' do
       it 'find tags' do
-        expect(Tag).to receive(:find).with(name:['test', 'tag']).and_return([FactoryGirl.build(:tag, id:0, name:'test')])
+        expect(Tag).to receive(:where).with(name:['test', 'tag']).and_return([FactoryGirl.build(:tag, id:0, name:'test')])
         allow(Tag).to receive(:create)
         Tag.strToTags(tags)
       end
 
       it 'creates new' do
-        allow(Tag).to receive(:find).and_return([FactoryGirl.build(:tag, id:0, name:'test')])
-        expect(Tag).to receive(:create) do |params|
-          expect(params).to eq [{name: 'tag'}]
-          params[0] = result[1]
-        end
+        allow(Tag).to receive(:where).and_return([result[0]])
+        expect(Tag).to receive(:create).with([{name: 'tag'}]).and_return([result[1]])
         expect(Tag.strToTags(tags)).to eq result
       end
     end

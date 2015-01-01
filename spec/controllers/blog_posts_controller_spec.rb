@@ -133,19 +133,19 @@ describe BlogPostsController, :unit, :type => :controller do
   end
 
   describe "POST 'create'" do
-    let(:params){{blog_post: {'title' => 'rr', 'post' => 'ff', 'tags_attributes' => [{'name' => 'ds', 'path' => 'test'}]}}}
+    let(:params){{blog_post: {'title' => 'rr', 'post' => 'ff', 'tags' => 'test, spec'}}}
     let(:make_request){post :create, params}
 
     before(:each) {session[:admin] = true}
 
     it 'creates new post' do
-      expect(BlogPost).to receive(:create!).with(params[:blog_post])
+      expect(BlogPost).to receive(:create_new!).with(params[:blog_post])
       make_request
     end
 
     context 'response' do
       before do 
-        allow(BlogPost).to receive(:create!)
+        allow(BlogPost).to receive(:create_new!)
         make_request
       end
 
@@ -156,7 +156,7 @@ describe BlogPostsController, :unit, :type => :controller do
 
     it_behaves_like 'user not authed'
     it_behaves_like 'not valid data' do
-      let(:mock_model){allow(BlogPost).to receive(:create!).and_raise(BlogTest::RecordInvalid)}
+      let(:mock_model){allow(BlogPost).to receive(:create_new!).and_raise(BlogTest::RecordInvalid)}
     end
   end
 
