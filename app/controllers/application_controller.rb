@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from ActiveRecord::RecordNotFound, with: proc{render_status 404}
-  rescue_from ActiveRecord::RecordInvalid,  with: proc{render_status 400}
 
   layout false
 

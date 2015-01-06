@@ -7,15 +7,15 @@
       .alert.alert-danger.col-sm-12 ng-show='user.username.$valid'
         div ng-repeat='post in posts'
           |hello
-      form.form-horizontal role="form" 
-        .input-group.user ng-class="{'has-error': user.username.$invalid && submitted}"
+      form.form-horizontal role="form" name='form' novalidate=''
+        .input-group.user ng-class="{'has-error': form.username.$invalid && form.$submitted}"
           span.input-group-addon
             i.fa.fa-user
-          input#login-username.form-control ng-model="user.username" placeholder=("username or email") ng-required='' type="text" /
-        .input-group.pass
+          input#login-username.form-control name="username" ng-model="user.username" placeholder=("username or email") required="" type="text" /
+        .input-group.pass ng-class="{'has-error': form.password.$invalid && form.$submitted}"
           span.input-group-addon
             i.fa.fa-lock
-          input.form-control ng-model="user.password" placeholder="password" type="password" ng-required=''/
+          input.form-control ng-model="user.password" placeholder="password" type="password" name='password' required=''/
         .input-group
           .checkbox
             label
@@ -23,4 +23,4 @@
               | Remember me
         .form-group
           .col-xs-12.col-sm-8.col-md-8.col-lg-8.controls
-            input.btn.btn-default type="submit" ng-click='actions.submit()' value='Login'
+            input.btn.btn-default type="submit" ng-click='actions.submit(form)' value='Login'

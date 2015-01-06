@@ -13,7 +13,10 @@ class BlogPost < ActiveRecord::Base
             }
   validates :path, length: {minimum: 5, too_short: ValidationError::TOO_SHORT}
   validates_presence_of :tags
+
+  attr_accessor :tags
   accepts_nested_attributes_for :tags
+  before_validation :convert_tags
 
   def preamble_part
     splitted_post[1] == nil ? '' : splitted_post[0]
@@ -23,16 +26,11 @@ class BlogPost < ActiveRecord::Base
     splitted_post[1] == nil ? splitted_post[0] : splitted_post[1]
   end
 
-  def self.create_new!(atrs)
-    post = BlogPost.new(
-      title: atrs['title'],
-      post:  atrs['post'],
-      path:  atrs['title']
-    )
-    post.tags = Tag.strToTags(atrs[:tags])
-    post.save!
-
-    post
+  def convert_tags
+    self.path = self.title
+    if self.tags.is_a? String 
+      self.tags = Tag.strToTags(self.tags)
+    end
   end
 
   private

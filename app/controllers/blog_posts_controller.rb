@@ -10,7 +10,7 @@ class BlogPostsController < ApplicationController
  
   def update
     @blog_post = BlogPost.find(params[:id])
-    @blog_post.update_attributes! blog_post_params
+    @blog_post.update_attributes blog_post_params
     render_status 200
   end   
 
@@ -24,7 +24,8 @@ class BlogPostsController < ApplicationController
   end
 
   def create
-    @blog_post= BlogPost.create_new! blog_post_params
+    @blog_post= BlogPost.create blog_post_params
+    render status: 400 unless @blog_post.valid?
   end
 
   private

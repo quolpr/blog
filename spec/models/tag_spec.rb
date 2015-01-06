@@ -65,9 +65,9 @@ describe Tag, :unit do
         Tag.strToTags(tags)
       end
 
-      it 'creates new' do
+      it 'build new tag' do
         allow(Tag).to receive(:where).and_return([result[0]])
-        expect(Tag).to receive(:create).with([{name: 'tag'}]).and_return([result[1]])
+        expect(Tag).to receive(:new).with({name: 'tag'}).and_return(result[1])
         expect(Tag.strToTags(tags)).to eq result
       end
     end

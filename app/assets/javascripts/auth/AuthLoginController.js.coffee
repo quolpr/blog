@@ -5,14 +5,21 @@ auth.controller('AuthLoginController', ['$scope', 'AuthManager', '$state', 'flas
     username: '',
     password: ''
   }
-
+  addError = ()->
+    
   actions = $scope.actions = {}
-  actions.submit = ->
+  actions.submit = (form)-> 
+    console.log form
+    return if form.$invalid
     authManager.login($scope.user.username, $scope.user.password).then(
       () ->
         $state.go('blog.post.list').then ()->
           flash.success = 'You was authed'
       ,
       () ->
+        form.password.$invalid = true
+        form.username.$invalid = true
     )
+  
+
 ])

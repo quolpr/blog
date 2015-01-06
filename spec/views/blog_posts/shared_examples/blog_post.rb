@@ -1,17 +1,13 @@
 shared_examples 'blog post' do
   it 'should be valid' do
-    expect(blog_post.count).to eq 6
-    expect(blog_post['tags'].count).to eq 5
-    expect(blog_post['tags'][0].count).to eq 2
+    expect(subject).not_to have_key 'errors'
   end
 end
 
 shared_examples 'when post is invalid' do
-  before :each do
-    @blog_post = FactoryGirl.build(:bad_blog_post)
-  end
+  let(:blog_post) {FactoryGirl.build(:bad_blog_post)}
 
-  it 'should return validation errors' do
-    expect(subject).to eq({'errors' =>{'post' =>['too_short']}})
+  it 'return validation errors' do
+    expect(subject).to have_key 'errors'
   end
 end

@@ -17,6 +17,10 @@ FactoryGirl.define do
       factory :bad_blog_post do
         post 'nnn'
       end
+
+      factory :blog_post_with_preamble do
+        post 'test~~~~~ghfh;alsdfsdf'
+      end
     end
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 
 describe BlogPostsController, :unit, :type => :controller do
-
+  let(:blog_post) {FactoryGirl.build :blog_post}
   describe "GET 'index'" do
     let(:params) {{'limit' => '13', 'offset' => '2'}}
     let(:make_request) {get :index, params}
@@ -57,13 +57,13 @@ describe BlogPostsController, :unit, :type => :controller do
     end
 
     it 'update attributes' do
-      expect(BlogPost).to receive_message_chain('find.update_attributes!').with(params['blog_post'])
+      expect(BlogPost).to receive_message_chain('find.update_attributes').with(params['blog_post'])
       make_request
     end
 
     context 'response' do
       before do
-        allow(BlogPost).to receive_message_chain('find.update_attributes!')
+        allow(BlogPost).to receive_message_chain('find.update_attributes')
         make_request
       end
 
@@ -73,9 +73,6 @@ describe BlogPostsController, :unit, :type => :controller do
     it_behaves_like 'user not authed'
     it_behaves_like 'not found' do
       let(:mock_model) {allow(BlogPost).to receive(:find).and_raise(BlogTest::RecordNotFound)}
-    end
-    it_behaves_like 'not valid data' do
-      let(:mock_model) {allow(BlogPost).to receive(:find).and_raise(BlogTest::RecordInvalid)}
     end
   end
 
@@ -139,25 +136,28 @@ describe BlogPostsController, :unit, :type => :controller do
     before(:each) {session[:admin] = true}
 
     it 'creates new post' do
-      expect(BlogPost).to receive(:create_new!).with(params[:blog_post])
+      expect(BlogPost).to receive(:create).with(params[:blog_post]).and_return(FactoryGirl.build :blog_post_with_tags)
       make_request
     end
 
     context 'response' do
+      let(:mock_model){allow(BlogPost).to receive(:create).and_return(FactoryGirl.build :blog_post_with_tags)}
       before do 
-        allow(BlogPost).to receive(:create_new!)
+        mock_model
         make_request
+      end
+
+      context 'not valid data' do
+        let(:mock_model){allow(BlogPost).to receive(:create).and_return(FactoryGirl.build :bad_blog_post)}
+        it {should respond_with(400)}
+        it {should render_template('create')}
       end
 
       it {should respond_with(200)}
       it {should render_template('create')}
     end
-    
 
     it_behaves_like 'user not authed'
-    it_behaves_like 'not valid data' do
-      let(:mock_model){allow(BlogPost).to receive(:create_new!).and_raise(BlogTest::RecordInvalid)}
-    end
   end
 
 end

@@ -3,9 +3,9 @@
     .form-group
       input type="text" class="form-control" name="title" ng-model="post.title" required
     .form-group
-      textarea.form-control rows='20' cols='32' ng-model="post.post" ng-change="markdown = post.post"
+      textarea.form-control rows='20' cols='32' ng-model="post.post" name="post"
     .form-group
       input type="text" class="form-control" name="tags" ng-model="post.tags" required
     input type='submit' ng-click='actions.submit()' value='publish!'
-  div btf-markdown="markdown"
+  div btf-markdown="post.post"
 

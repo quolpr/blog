@@ -16,9 +16,9 @@ class Tag < ActiveRecord::Base
     not_exist_tags = []
     tags.each {|tag|
       first_found = exist_tags.detect{|el| el.name == tag}
-      not_exist_tags << {name: tag} unless first_found.present?
+      not_exist_tags << Tag.new(name: tag) unless first_found.present?
     }
-    exist_tags + (Tag.create(not_exist_tags) || [])
+    exist_tags + not_exist_tags
   end 
 
   private   
@@ -29,7 +29,6 @@ class Tag < ActiveRecord::Base
       .compact
       .uniq
       .reject{|el| el.empty? || el == ','}
-
   end   
 
   def create_path
