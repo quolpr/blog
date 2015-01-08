@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+=begin
 feature 'Creating new blog post', js:true do
   let(:blog_post) { FactoryGirl.build :blog_post_with_tags}
 
@@ -16,3 +16,4 @@ feature 'Creating new blog post', js:true do
 
 
 end
+=end

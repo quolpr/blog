@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+=begin
 feature 'Looking up recipes', js:true do
 
   before do
@@ -17,3 +17,4 @@ feature 'Looking up recipes', js:true do
     expect(page).to have_content(@second_post.post)
   end
 end
+=end

@@ -23,7 +23,7 @@ blogPost.config([ '$stateProvider', '$urlRouterProvider',
         }
       })
       .state('blog.post.show', {
-        url: "/post/{path}_{id:[0-9]}",
+        url: "/post/{path}_{id:[0-9]*}",
         views: {
           'main_content@': {
             templateUrl: 'post.html',

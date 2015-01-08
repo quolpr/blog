@@ -5,21 +5,21 @@ describe Tag, :unit do
   it{should ensure_length_of(:name).is_at_least(3).with_message(ValidationError::TOO_SHORT)}
   it{should have_and_belong_to_many :blog_posts}
 
-  describe '#strToTags' do
-  	let(:tags) {'test, tag'}
+  describe '#normalize_params' do
+  	let(:tags) {[{name: 'test'}, {name:'tag'}]}
     let(:result) {[
-        FactoryGirl.build(:tag, id:0, name:'test'),
-        FactoryGirl.build(:tag, id:1, name:'tag')
+        {name: 'test', id: 0},
+        {name: 'tag', id: 1}
     ]}
     
     context 'parsing tags' do
       def check_it
         expect(Tag).to receive(:where).with(name: ['test', 'tag']).and_return(result)
-        Tag.strToTags(tags)
+        Tag.normalize_params(tags)
       end
 
       context 'has double comma' do
-        let (:tags) {'test,, tag'}
+        let (:tags) {[{name: 'test'},{name: ','}, {name:'tag'}]}
 
         it 'cut down their' do
           check_it
@@ -27,7 +27,7 @@ describe Tag, :unit do
       end
 
       context 'has repeated tags' do
-        let (:tags) {'test, test, tag'}
+        let (:tags) {[{name: 'test'}, {name: 'test'}, {name:'tag'}]}
 
         it 'cut down their' do
           check_it
@@ -35,17 +35,9 @@ describe Tag, :unit do
       end
 
       context 'has empty tag' do
-        let (:tags) {'test, , tag'}
+        let (:tags) {[{name: 'test'}, {name: ' '}, {name:'tag'}]}
 
         it 'cut down their' do
-          check_it
-        end
-      end
-
-      context 'has upper chars' do
-        let (:tags) {'TeSt, TaG'}
-
-        it 'convert their to lower' do
           check_it
         end
       end
@@ -54,23 +46,25 @@ describe Tag, :unit do
     context 'tags exist'  do
       it 'use existence' do
         expect(Tag).to receive(:where).with(name:['test', 'tag']).and_return(result)
-        expect(Tag.strToTags(tags)).to eq result
+        expect(Tag.normalize_params(tags)).to eq result
       end
     end
 
     context 'some tags not exist' do
+      let(:result){[
+        {name: 'test', id: 0},
+        {name: 'tag'}
+      ]}
       it 'find tags' do
         expect(Tag).to receive(:where).with(name:['test', 'tag']).and_return([FactoryGirl.build(:tag, id:0, name:'test')])
         allow(Tag).to receive(:create)
-        Tag.strToTags(tags)
+        Tag.normalize_params(tags)
       end
 
-      it 'build new tag' do
-        allow(Tag).to receive(:where).and_return([result[0]])
-        expect(Tag).to receive(:new).with({name: 'tag'}).and_return(result[1])
-        expect(Tag.strToTags(tags)).to eq result
+      it 'join with existence' do
+        allow(Tag).to receive(:where).and_return([result[0]])#find only first element
+        expect(Tag.normalize_params(tags)).to eq result
       end
     end
-
   end
 end

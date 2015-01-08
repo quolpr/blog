@@ -24,3 +24,5 @@ describe Authorizer, :unit do
     end
   end
 end
+
+

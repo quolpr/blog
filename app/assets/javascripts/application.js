@@ -30,5 +30,6 @@
 //= require blogPost/Module
 //= require auth/Module
 //= require common/Module
+//= require progress/Module
 
 //= require_tree .

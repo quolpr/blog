@@ -10,25 +10,29 @@ class Tag < ActiveRecord::Base
                 message: ValidationError::NOT_UNIQUE
             }
 
-  def self.strToTags(tags)
-    tags = normalize_tags(tags.split(','))
-    exist_tags = Tag.where(name:tags) || [] 
-    not_exist_tags = []
-    tags.each {|tag|
-      first_found = exist_tags.detect{|el| el.name == tag}
-      not_exist_tags << Tag.new(name: tag) unless first_found.present?
+  def self.normalize_params(tags)
+    tags = normalize_tags(tags)
+    exist_tags = Tag.where(name:tags.map(&:values).flatten) || [] 
+    exist_tags.collect!{|tag|{name:tag[:name], id:tag[:id]}}
+    tags.each_index{|index|
+      i = exist_tags.find_index{|exist_tag| exist_tag[:name] == tags[index][:name]}
+      tags[index] = exist_tags[i] if i != nil
     }
-    exist_tags + not_exist_tags
+    tags
   end 
+
+
 
   private   
   def self.normalize_tags(tags)
-    tags
-      .collect(&:strip)
-      .collect(&:downcase)
-      .compact
-      .uniq
-      .reject{|el| el.empty? || el == ','}
+    tags = tags.map(&:values).flatten
+    tags = tags
+            .collect(&:strip)
+            .collect(&:downcase)
+            .compact
+            .uniq
+            .reject{|el| el.empty? || el == ','}
+    tags.collect{|tag| {name:tag}}
   end   
 
   def create_path

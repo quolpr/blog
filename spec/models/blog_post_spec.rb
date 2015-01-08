@@ -73,4 +73,5 @@ describe BlogPost, :unit do
     end
   end
 
+  
 end

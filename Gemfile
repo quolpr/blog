@@ -39,6 +39,8 @@ group :test, :development do
   gem 'shoulda-matchers'
   gem 'teaspoon'
   gem 'poltergeist'
+  gem 'spring-commands-rspec'
+  gem 'guard-rspec'
 end
 
 group :production do

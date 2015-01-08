@@ -1,6 +1,6 @@
 angular.module('blog.blogPost')
 .controller('BlogListController',
-["$scope", "BlogPost", "ngProgress", "flash", 'smoothScroll',($scope, blogPost, ngProgress, flash, smoothScroll) ->
+["$scope", "BlogPost", "flash", 'smoothScroll',($scope, blogPost, flash, smoothScroll) ->
   $scope.loading = true
 
   $scope.onReadMore = ->
