@@ -55,23 +55,23 @@ describe BlogPost, :unit do
     end
   end
 
-
-  describe "#self.create" do
-    let(:post){{'title' => 'test', 'tags'=>'some, tags'}}
-    context "tags is string" do
-      it 'convert it to objects' do
-        allow(ActiveRecord::Base).to receive(:create)
-        expect(Tag).to receive(:strToTags).with(post['tags'])
-        BlogPost.create(post)
+  describe 'before_validation' do
+    describe '#normalize_tags' do
+      let(:blog_post){FactoryGirl.build :blog_post}
+      it 'normalize_tags' do
+        expect(Tag).to receive(:normalize_params).with(blog_post.tags)
+        blog_post.send(:normalize_tags)
       end
 
-      it 'calls parent method' do
-        allow(Tag).to receive(:strToTags)
-        expect(ActiveRecord::Base).to receive(:create).with(post, &nil)
-        BlogPost.create(post)
+      it 'set it to self' do
+        allow(Tag).to receive(:normalize_params).and_return(ret = double)
+        expect(blog_post.tags).to eq ret
+        blog_post.send(:normalize_tags)
       end
     end
   end
+
+
 
   
 end

@@ -13,6 +13,7 @@ class BlogPost < ActiveRecord::Base
             }
   validates :path, length: {minimum: 5, too_short: ValidationError::TOO_SHORT}
   validates_presence_of :tags
+  before_validation :normalize_tags
   
   def preamble_part
     splitted_post[1] == nil ? '' : splitted_post[0]
@@ -22,15 +23,11 @@ class BlogPost < ActiveRecord::Base
     splitted_post[1] == nil ? splitted_post[0] : splitted_post[1]
   end
 
-  def self.create(attributes = nil, &block)
-    attributes['path'] = attributes['title']
-    if attributes['tags'].is_a? String 
-      attributes['tags'] = Tag.strToTags(attributes['tags'])
-    end
-    super
-  end
-
   private 
+
+  def normalize_tags
+    self.tags = Tag.normalize_params(self.tags)
+  end
 
   def splitted_post
     @splitted_post ||= post.split(SPLITTER, 2)
