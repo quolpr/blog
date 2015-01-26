@@ -41,6 +41,7 @@ group :test, :development do
   gem 'poltergeist'
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
+  gem 'coveralls', require: false
 end
 
 group :production do
