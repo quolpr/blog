@@ -21,10 +21,6 @@ class BlogPost < ActiveRecord::Base
   def main_part
     splitted_post[1] == nil ? splitted_post[0] : splitted_post[1]
   end
-
-
-  private 
-
   def splitted_post
     @splitted_post ||= post.split(SPLITTER, 2)
   end
