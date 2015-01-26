@@ -11,29 +11,14 @@ class Tag < ActiveRecord::Base
             }
 
   def self.normalize_params(tags)
-    tags = normalize_tags(tags)
-    exist_tags = Tag.where(name:tags.map(&:values).flatten) || [] 
-    exist_tags.collect!{|tag|{name:tag[:name], id:tag[:id]}}
-    tags.each_index{|index|
-      i = exist_tags.find_index{|exist_tag| exist_tag[:name] == tags[index][:name]}
-      tags[index] = exist_tags[i] if i != nil
-    }
-    tags
-  end 
-
-
-
-  private   
-  def self.normalize_tags(tags)
     tags = tags.map(&:values).flatten
     tags = tags
             .collect(&:strip)
-            .collect(&:downcase)
             .compact
             .uniq
-            .reject{|el| el.empty? || el == ','}
+            .reject{|el| el.empty?}
     tags.collect{|tag| {name:tag}}
-  end   
+  end 
 
   def create_path
     self.path = name

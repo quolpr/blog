@@ -8,24 +8,15 @@ describe Tag, :unit do
   describe '#normalize_params' do
   	let(:tags) {[{name: 'test'}, {name:'tag'}]}
     let(:result) {[
-        {name: 'test', id: 0},
-        {name: 'tag', id: 1}
+        {name: 'test'},
+        {name: 'tag'}
     ]}
-    
+
     context 'parsing tags' do
       def check_it
-        expect(Tag).to receive(:where).with(name: ['test', 'tag']).and_return(result)
-        Tag.normalize_params(tags)
+        expect(Tag.normalize_params(tags)).to eq result
       end
-
-      context 'has double comma' do
-        let (:tags) {[{name: 'test'},{name: ','}, {name:'tag'}]}
-
-        it 'cut down their' do
-          check_it
-        end
-      end
-
+      
       context 'has repeated tags' do
         let (:tags) {[{name: 'test'}, {name: 'test'}, {name:'tag'}]}
 
@@ -42,29 +33,6 @@ describe Tag, :unit do
         end
       end
     end
-
-    context 'tags exist'  do
-      it 'use existence' do
-        expect(Tag).to receive(:where).with(name:['test', 'tag']).and_return(result)
-        expect(Tag.normalize_params(tags)).to eq result
-      end
-    end
-
-    context 'some tags not exist' do
-      let(:result){[
-        {name: 'test', id: 0},
-        {name: 'tag'}
-      ]}
-      it 'find tags' do
-        expect(Tag).to receive(:where).with(name:['test', 'tag']).and_return([FactoryGirl.build(:tag, id:0, name:'test')])
-        allow(Tag).to receive(:create)
-        Tag.normalize_params(tags)
-      end
-
-      it 'join with existence' do
-        allow(Tag).to receive(:where).and_return([result[0]])#find only first element
-        expect(Tag.normalize_params(tags)).to eq result
-      end
-    end
   end
 end
+
