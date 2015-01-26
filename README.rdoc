@@ -1,4 +1,4 @@
-== README {<img src="https://magnum.travis-ci.com/quolpr/blog.svg?token=XzAtk9Ae6oHqHUwpe6hU&branch=master" alt="Build Status" />}[https://magnum.travis-ci.com/quolpr/blog]
+== README {<img src="https://travis-ci.org/quolpr/blog.svg" alt="Build Status" />}[https://travis-ci.org/quolpr/blog]
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
