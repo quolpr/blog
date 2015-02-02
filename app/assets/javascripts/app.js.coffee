@@ -28,7 +28,7 @@ blog.config [ '$stateProvider', '$urlRouterProvider'
           },
           data: {
             useProgress: true
-            usingAjax:   true
+            dataPreload:   true
           },
           abstract: true
         }
@@ -36,7 +36,7 @@ blog.config [ '$stateProvider', '$urlRouterProvider'
       .state('blog.about_me', {
         url: "/about_me",
         data: {
-          usingAjax: false
+          dataPreload: false
         }
         views: {
           'main_content@': {

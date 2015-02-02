@@ -23,7 +23,7 @@ auth.config [ '$stateProvider', '$urlRouterProvider',
         }
         
         data: {
-          usingAjax: false
+          dataPreload:false
         }
       })
       .state('blog.auth.logout', {

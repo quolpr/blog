@@ -9,7 +9,4 @@ json.blog_posts @blog_posts do |blog_post|
   
   
 end
-
-json.pages do
-  json.count   BlogPost.count
-end
+json.count BlogPost.count

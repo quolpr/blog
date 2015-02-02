@@ -24,9 +24,9 @@ html ng-app='blog'
             a.navbar-brand quolpr
           .navbar-collapse.collapse.out ng-controller="NavController"
             ul.nav.navbar-nav
-              li ng-class="{ active: isActive('/')}"
+              li ng-class="{ active: isActive('blog.post')}"
                 a  ui-sref='blog.post.list' Блог
-              li ng-class="{ active: isActive('/about_me')}"
+              li ng-class="{ active: isActive('blog.about_me')}"
                 a  ui-sref='blog.about_me' Обо мне
 
             form.navbar-form.navbar-right

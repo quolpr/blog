@@ -26,6 +26,14 @@ body {
       margin-right: 3px;
     }
   }
+
+  .pagin {
+    text-align: center;
+    a {
+      font-size: 15px !important;
+    }
+    
+  }
 }
 
 @mixin content-block {

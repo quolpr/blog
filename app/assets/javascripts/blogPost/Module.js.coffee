@@ -3,7 +3,8 @@ blogPost = angular.module('blog.blogPost', [
   'templates',
   'ngProgress',
   'btford.markdown',
-  'smoothScroll'
+  'smoothScroll',
+  'blog.common'
 ])
 
 blogPost.config([ '$stateProvider', '$urlRouterProvider',
@@ -11,10 +12,15 @@ blogPost.config([ '$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('blog.post', {
         url: '',
-        abstract:true
+        abstract: true
       })
       .state('blog.post.list', {
-        url: "/",
+        url: "/{page:[0-9]*}",
+        params: {
+          page: {
+            value: '1'
+          }
+        },
         views: {
           'main_content@': {
             templateUrl:  'post_list.html',
@@ -41,7 +47,9 @@ blogPost.config([ '$stateProvider', '$urlRouterProvider',
           }
         }
         data: {
-          usingAjax: false
+          dataPreload: false
         }
       })
 ])
+
+blogPost.value 'PostsPerPage', 1

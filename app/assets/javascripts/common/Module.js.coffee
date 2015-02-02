@@ -1,1 +1,1 @@
-angular.module('blog.common', [])
+angular.module('blog.common', ['ui.router'])

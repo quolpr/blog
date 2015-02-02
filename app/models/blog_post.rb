@@ -13,6 +13,7 @@ class BlogPost < ActiveRecord::Base
             }
   validates :path, length: {minimum: 5, too_short: ValidationError::TOO_SHORT}
   validates_presence_of :tags
+  accepts_nested_attributes_for :tags
   
   def preamble_part
     splitted_post[1] == nil ? '' : splitted_post[0]

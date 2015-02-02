@@ -1,8 +1,9 @@
 angular.module('blog.common')
 .controller('NavController',
-  ["$scope", "$location",
-    ($scope, $location)->
+  ["$scope", "$state"
+    ($scope, $state)->
+      
       $scope.isActive =  (viewLocation) ->
-        viewLocation == $location.path()
+        $state.current.name.indexOf(viewLocation) != -1
   ]
 )

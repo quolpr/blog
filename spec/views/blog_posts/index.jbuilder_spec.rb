@@ -37,7 +37,7 @@ describe 'blog_posts/index', :type => :view do
     end
   end
 
-  it 'have pagination info' do
-    expect(subject['pages']['count']).to eq BlogPost.count
+  it 'have posts count' do
+    expect(subject['count']).to eq BlogPost.count
   end
 end

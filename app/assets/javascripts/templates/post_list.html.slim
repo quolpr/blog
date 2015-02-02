@@ -1,17 +1,21 @@
 .col-xs-12.col-sm-9.col-md-9.col-lg-9
   =image_tag 'ajax-loader.gif', {'ng-show' => 'loading'}
-  .blog-post ng-repeat='post in posts'
-    h2.header
-      |{{post.title}}
-    .body btf-markdown='post.post'
-    .rdmore
-      a ng-click='onReadMore()' ui-sref='blog.post.show({path:post.path, id:post.id})' READ MORE
-    .info
-      .fa.fa-clock-o
-      abbr title="{{post.date}}"
-        |{{post.created_at | date : 'medium'}}
-      .fa.fa-tags
-      .tag ng-repeat='tag in post.tags'
-        a href='#tag/{{tag.path}}_{{tag.id}}' {{tag.name}}
-
-//pagination total-items="posts.count" ng-model="navigation.currentPage" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="navigation.allPages" ng-change="navigation.pageChanged()"
+  div ng-show="pagination.count"
+    .blog-post ng-repeat='post in posts'
+      h2.header
+        |{{post.title}}
+      .body btf-markdown='post.post'
+      .rdmore
+        a ng-click='onReadMore()' ui-sref='blog.post.show({path:post.path, id:post.id})' READ MORE
+      .info
+        .fa.fa-clock-o
+        abbr title="{{post.date}}"
+          |{{post.created_at | date : 'medium'}}
+        .fa.fa-tags
+        .tag ng-repeat='tag in post.tags'
+          a href='#tag/{{tag.path}}_{{tag.id}}' {{tag.name}}
+  .info-block.pagin
+    
+    pagination items-per-page='pagination.perPage' total-items="pagination.count" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" ng-change="pagination.pageChanged()"
+  div ng-hide="pagination.count"
+    |Новых постов пока нет :(

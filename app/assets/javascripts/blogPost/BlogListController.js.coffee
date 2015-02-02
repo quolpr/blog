@@ -1,20 +1,21 @@
 angular.module('blog.blogPost')
 .controller('BlogListController',
-["$scope", "BlogPost", "flash", 'smoothScroll',($scope, blogPost, flash, smoothScroll) ->
+["$scope", "BlogPost", 'PostsPerPage', '$state', '$stateParams', ($scope, blogPost, PostsPerPage, $state, $stateParams) ->
+  
   $scope.loading = true
-
-  $scope.onReadMore = ->
-    smoothScroll(
-      duration: 500
-      offset:   0
-      easing:   'easeInQuad'
-    )
-
-  blogPost.loadAll().then(
+  $scope.posts = {}
+  blogPost.loadAll($stateParams.page).then(
     (data)->
       $scope.loading = false
       $scope.posts = data.data.blog_posts
-  )
 
+      $scope.pagination = {
+        currentPage: $stateParams.page
+        perPage: PostsPerPage
+        count: data.data.count
+        pageChanged: -> $state.go('blog.post.list', {page: this.currentPage})
+      }
+  )
+  
 ])
 

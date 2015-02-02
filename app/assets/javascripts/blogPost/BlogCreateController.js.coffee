@@ -1,6 +1,6 @@
 angular.module('blog.blogPost')
 .controller('BlogCreateController',
-["$scope", "BlogPost", "ngProgress", '$interval', ($scope, blogPost, ngProgress, $interval) ->
+["$scope", "BlogPost", "ngProgress", '$interval', 'TagConverter', ($scope, blogPost, ngProgress, $interval, tagConverter) ->
   $scope.post = {
     title: '',
     post: '',
@@ -9,7 +9,7 @@ angular.module('blog.blogPost')
 
   actions = $scope.actions = {}
   actions.submit = ->
-    blogPost.create($scope.post.title, $scope.post.post, $scope.post.tags).then(
+    blogPost.create($scope.post.title, $scope.post.post, tagConverter.convert($scope.post.tags)).then(
       () ->
   )
 

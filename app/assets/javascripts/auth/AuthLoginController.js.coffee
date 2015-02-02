@@ -9,7 +9,6 @@ auth.controller('AuthLoginController', ['$scope', 'AuthManager', '$state', 'flas
     
   actions = $scope.actions = {}
   actions.submit = (form)-> 
-    console.log form
     return if form.$invalid
     authManager.login($scope.user.username, $scope.user.password).then(
       () ->
