@@ -1,4 +1,4 @@
-== README
+== README {<img src="https://travis-ci.org/quolpr/blog.svg" alt="Build Status" />}[https://travis-ci.org/quolpr/blog] {<img src="https://coveralls.io/repos/quolpr/blog/badge.svg" alt="Coverage Status" />}[https://coveralls.io/r/quolpr/blog] {<img src="https://codeclimate.com/github/quolpr/blog/badges/gpa.svg" />}[https://codeclimate.com/github/quolpr/blog]
 
 This README would normally document whatever steps are necessary to get the
 application up and running.

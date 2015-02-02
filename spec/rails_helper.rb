@@ -5,6 +5,20 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/poltergeist'
 require 'capybara/rails'
+
+if ENV['TRAVIS'] || ENV['COVERAGE']
+  require 'simplecov'
+
+  if ENV['TRAVIS']
+    require 'coveralls'
+    SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+  end
+
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
+end
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
