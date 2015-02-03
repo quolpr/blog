@@ -14,7 +14,7 @@
  *= require bootstrap-sass-official/assets/stylesheets/_bootstrap-sprockets.scss
  *= require bootstrap-sass-official/assets/stylesheets/_bootstrap.scss
  */
-@import "awesome_fix/font_awesome";
+@import "font-awesome/scss/font-awesome";
 @import "awesome_fix/font_paths";
 @import "base.css.scss";
 @import "font.css.scss";
