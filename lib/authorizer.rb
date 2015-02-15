@@ -3,7 +3,7 @@ class Authorizer
   attr_writer :config
 
   def admin?(user, password)
-    if user == config[:user].to_s && password == config[:password].to_s
+    if user == config[:user].to_s && password == config[:pass].to_s
       true
     else
       false
@@ -11,6 +11,6 @@ class Authorizer
   end
 
   def config
-    @config ||= (YAML.load_file './config/app.yml').symbolize_keys
+    @config ||= Settings['auth']
   end
 end
