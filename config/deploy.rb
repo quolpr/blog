@@ -1,5 +1,5 @@
 # config valid only for Capistrano 3.1
-lock '3.2.1'
+lock '3.3.5'
 
 set :application, 'blog'
 set :repo_url, 'git@github.com:quolpr/blog.git'
@@ -84,7 +84,9 @@ end
 namespace :deploy do
 
   task :upload_config do
-    upload!('shared/settings.yml', '#{shared_path}/settings.yml')
+    on roles(:all) do
+      upload!('shared/settings.yml', "#{shared_path}/config/settings.yml")
+    end
   end
 
   desc 'Setup'
@@ -126,7 +128,7 @@ namespace :deploy do
       execute "ln -s #{shared_path}/config/secrets.yml #{release_path}/config/secrets.yml"
       execute "ln -s #{shared_path}/Procfile #{release_path}/Procfile"
       execute "ln -s #{shared_path}/system #{release_path}/public/system"
-      execute "ln -s #{shared_path}/settings.yml #{release_path}/config/settings/production.yml"
+      execute "ln -s #{shared_path}/config/settings.yml #{release_path}/config/settings/production.yml"
     end
   end
 
