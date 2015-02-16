@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+/.capistrano
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -21,6 +22,7 @@
 /node_modules
 /config/app.yml
 /config/database.yml 
+/config/secrets.yml
 /Procfile 
 /config/deploy/
 /shared/ 

@@ -12,17 +12,17 @@ html ng-app='blog'
     .loading
       =image_tag 'ajax-loader.gif'
       |Loading...
-    .main-content
-      .navbar.navbar-default.navbar-static-top#top role="navigation"
+    .main-content.hide
+      nav.navbar.navbar-default.navbar-static-top#top role="navigation" ng-controller="NavController"
         .container
           .navbar-header
-            button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
+            button.navbar-toggle type="button" data-toggle="collapse" ng-click="isCollapsed = !isCollapsed"
               span.sr-only Toggle navigation
               span.icon-bar
               span.icon-bar
               span.icon-bar
             a.navbar-brand quolpr
-          .navbar-collapse.collapse.out ng-controller="NavController"
+          .navbar-collapse.navbar-responsive-collapse.collapse collapse="isCollapsed"
             ul.nav.navbar-nav
               li ng-class="{ active: isActive('blog.post')}"
                 a  ui-sref='blog.post.list' Блог

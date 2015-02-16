@@ -1,6 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+window.$ = window.jQuery = angular.element
 
 blog = angular.module('blog', [
   'blog.blogPost',
@@ -49,15 +50,21 @@ blog.config [ '$stateProvider', '$urlRouterProvider'
 ]
 
 blog.config ['$httpProvider', ($httpProvider)->
-  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+
+  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $(document.querySelector('meta[name=csrf-token]')).attr('content')
 ]
 
 
 blog.run ['$rootScope', '$timeout', ($rootScope, $timeout) ->
   $timeout(
     ()-> 
-      $('body .loading').slideUp(1000)
-      $('body .main-content').show()
-    ,1000
+      $(document.querySelector('body .main-content')).removeClass("hide")
+      $timeout(
+        ()-> 
+          $(document.querySelector('body .loading')).addClass("hide")
+          
+        ,100
+      )
+    ,500
   )
 ]
