@@ -9,7 +9,8 @@ html ng-app='blog'
 
 
   body ng-controller="AuthController"
-    .loading
+
+    .loading loading='body .main-content'
       =image_tag 'ajax-loader.gif', size:"16x16"
       |Loading...
     .main-content.hide

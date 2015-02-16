@@ -50,21 +50,5 @@ blog.config [ '$stateProvider', '$urlRouterProvider'
 ]
 
 blog.config ['$httpProvider', ($httpProvider)->
-
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $(document.querySelector('meta[name=csrf-token]')).attr('content')
-]
-
-
-blog.run ['$rootScope', '$timeout', ($rootScope, $timeout) ->
-  $timeout(
-    ()-> 
-      $(document.querySelector('body .main-content')).removeClass("hide")
-      $timeout(
-        ()-> 
-          $(document.querySelector('body .loading')).addClass("hide")
-          
-        ,100
-      )
-    ,500
-  )
 ]
