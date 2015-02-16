@@ -24,6 +24,8 @@ gem 'slim'
 gem 'angular-rails-templates'
 gem 'draper'
 
+gem "autoprefixer-rails"
+
 gem "rails_config"
 group :test, :development do
   gem 'rspec', '~> 3.1'
