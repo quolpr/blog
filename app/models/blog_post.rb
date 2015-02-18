@@ -11,9 +11,10 @@ class BlogPost < ActiveRecord::Base
             }, uniqueness: {
               message: ValidationError::NOT_UNIQUE
             }
-  validates :path, length: {minimum: 5, too_short: ValidationError::TOO_SHORT}
+  
+  before_validation :create_path
+
   validates_presence_of :tags
-  accepts_nested_attributes_for :tags
   
   def preamble_part
     splitted_post[1] == nil ? '' : splitted_post[0]
@@ -22,7 +23,19 @@ class BlogPost < ActiveRecord::Base
   def main_part
     splitted_post[1] == nil ? splitted_post[0] : splitted_post[1]
   end
+
   def splitted_post
     @splitted_post ||= post.split(SPLITTER, 2)
+  end
+
+  def all_tags=(tags)
+    tags.each do |tag|
+      self.tags << Tag.where(name: tag[:name]).first_or_create!
+    end
+  end
+
+  private
+  def create_path
+    self.path = title
   end
 end

@@ -16,14 +16,14 @@ RSpec.describe AuthController, :unit, :type => :controller do
       let(:authorizer){double(Authorizer, admin?: true)}
       before{post :create}
       it { should respond_with(:success) }
-      it { should set_session(:admin).to(true) }
+      it { should set_session[:admin].to(true) }
     end
 
     context 'auth data not valid' do
       let(:authorizer){double(Authorizer, admin?: false)}
       before{post :create}
       it { should respond_with(401) }
-      it { should set_session(:admin).to(false) }
+      it { should set_session[:admin].to(false) }
     end
   end
 
@@ -32,7 +32,7 @@ RSpec.describe AuthController, :unit, :type => :controller do
 
     it { should respond_with(200) }
 
-    it { should set_session(:admin).to(false) }
+    it { should set_session[:admin].to(false) }
 
   end
 

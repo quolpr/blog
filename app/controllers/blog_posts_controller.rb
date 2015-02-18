@@ -1,7 +1,5 @@
 class BlogPostsController < ApplicationController
   before_action :authorize, only:[:create, :destroy, :update]
-  before_action :normalize_tags, only:[:create, :update]
-
   def index
     @blog_posts = BlogPost
                       .limit(limit)
@@ -25,19 +23,13 @@ class BlogPostsController < ApplicationController
   end
 
   def create
-    @blog_post= BlogPost.new blog_post_params
-    @blog_post.save
+    @blog_post= BlogPost.create blog_post_params
     render status: 400 unless @blog_post.valid?
   end
 
   private
 
-  def normalize_tags
-    #return if blog_post_params['tags_attributes'].blank?
-    #blog_post_params['tags_attributes'] = Tag.normalize_params(blog_post_params['tags_attributes'])
-  end
-
   def blog_post_params
-    @blog_post_params ||= params.require(:blog_post).permit( :title, :post, tags_attributes: [:name, :tag_id])
+    @blog_post_params ||= params.require(:blog_post).permit( :title, :post, all_tags:[:name, :id])
   end 
 end

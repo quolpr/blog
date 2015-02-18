@@ -22,6 +22,5 @@ class Tag < ActiveRecord::Base
 
   def create_path
     self.path = name
-  end    
-
+  end
 end

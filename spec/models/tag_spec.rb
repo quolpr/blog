@@ -2,8 +2,13 @@ require 'rails_helper'
 
 describe Tag, :unit do
   it{should validate_uniqueness_of(:name).with_message(ValidationError::NOT_UNIQUE)}
-  it{should ensure_length_of(:name).is_at_least(3).with_message(ValidationError::TOO_SHORT)}
+  it{should validate_length_of(:name).is_at_least(3).with_message(ValidationError::TOO_SHORT)}
   it{should have_and_belong_to_many :blog_posts}
+
+  subject{Tag.new(name:'test')}
+  let(:tags) do
+    [{name: 'test'}, {name:'tag'}]
+  end
 
   describe '#normalize_params' do
   	let(:tags) {[{name: 'test'}, {name:'tag'}]}
@@ -32,6 +37,20 @@ describe Tag, :unit do
           check_it
         end
       end
+    end
+  end
+
+  describe '#create_path' do
+    it 'set path' do
+      subject.send(:create_path)
+      expect(subject.path).to eq subject.name
+    end
+  end
+
+  describe "before validation" do
+    it 'call #create_path' do
+      expect(subject).to receive(:create_path)
+      subject.run_callbacks(:validation)
     end
   end
 end

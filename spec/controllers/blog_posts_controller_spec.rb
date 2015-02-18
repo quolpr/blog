@@ -52,7 +52,7 @@ describe BlogPostsController, :unit, :type => :controller do
       {
         'id' => '10', 
         'blog_post' => {
-          'tags' => [{name: 'test'}, {name:'spec'}]
+          'all_tags' => [{name: 'test'}, {name:'spec'}]
         }
       }
     end
@@ -66,12 +66,6 @@ describe BlogPostsController, :unit, :type => :controller do
 
     it 'update attributes' do
       expect(BlogPost).to receive_message_chain('find.update_attributes').with(params['blog_post'])
-      make_request
-    end
-
-    it 'normlize tags' do
-      allow(BlogPost).to receive(:find).and_return(spy)
-      expect(Tag).to receive(:normalize_params).with(params['blog_post']['tags'])
       make_request
     end
 
@@ -144,17 +138,12 @@ describe BlogPostsController, :unit, :type => :controller do
   end
 
   describe "POST 'create'" do
-    let(:params){{'blog_post'=> {'title' => 'rr', 'post' => 'ff', 'tags' => [{name: 'test'}, {name:'spec2'}] }}}
+    let(:params){{'blog_post'=> {'title' => 'rr', 'post' => 'ff', 'all_tags' => [{name: 'test'}, {name:'spec2'}] }}}
     let(:make_request){post :create, params}
 
     before(:each) {session[:admin] = true}
 
-    it 'normlize tags' do
-      allow(BlogPost).to receive(:create).and_return(spy)
-      expect(Tag).to receive(:normalize_params).with(params['blog_post']['tags'])
-      make_request
-    end
-
+    
     it 'creates new post' do
       expect(BlogPost).to receive(:create).with(params['blog_post']).and_return(FactoryGirl.build :blog_post_with_tags)
       make_request

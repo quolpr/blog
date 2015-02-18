@@ -1,12 +1,13 @@
 require 'rails_helper'
 describe BlogPost, :unit do
-  it{should ensure_length_of(:title).is_at_least(5).with_message(ValidationError::TOO_SHORT)}
-  it{should ensure_length_of(:post).is_at_least(10).with_message(ValidationError::TOO_SHORT)}
+  it{should validate_length_of(:title).is_at_least(5).with_message(ValidationError::TOO_SHORT)}
+  it{should validate_length_of(:post).is_at_least(10).with_message(ValidationError::TOO_SHORT)}
   it{should validate_uniqueness_of(:title).with_message(ValidationError::NOT_UNIQUE)}
-  it{should ensure_length_of(:path).is_at_least(5).with_message(ValidationError::TOO_SHORT)}
   
   it{should have_and_belong_to_many :tags}
   it{should validate_presence_of :tags}
+
+  subject{BlogPost.new(title:'test')}
 
   describe '#main_part and #preamble_part' do
     context 'splitter is exist in post' do
@@ -52,6 +53,20 @@ describe BlogPost, :unit do
       it 'has main part' do
         expect(subject.main_part).to eq main_part
       end
+    end
+  end
+
+  describe '#create_path' do
+    it 'set path' do
+      subject.send(:create_path)
+      expect(subject.path).to eq subject.title
+    end
+  end
+
+  describe "before validation" do
+    it 'call #create_path' do
+      expect(subject).to receive(:create_path)
+      subject.run_callbacks(:validation)
     end
   end
 
