@@ -28,14 +28,10 @@ auth.config [ '$stateProvider', '$urlRouterProvider',
       })
       .state('blog.auth.logout', {
         url: "/logout"
+        onEnter: ['AuthManager', 'flash', '$rootScope', '$state', (authManager, flash, $rootScope, $state)->
+          authManager.logout()
+          $state.go('blog.post.list').then ->
+            flash.success = 'You was logged out'
+        ]
       })
-]
-
-auth.run ['$state', 'AuthManager', 'flash', '$rootScope', ($state, authManager, flash, $rootScope)->
-  $rootScope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams)->
-    if toState.name == 'blog.auth.logout'
-      event.preventDefault()
-      authManager.logout()
-      $state.go('blog.post.list').then ->
-        flash.success = 'You was logged out'
 ]

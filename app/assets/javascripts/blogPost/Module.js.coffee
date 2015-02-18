@@ -50,6 +50,23 @@ blogPost.config([ '$stateProvider', '$urlRouterProvider',
           dataPreload: false
         }
       })
+
+      .state('blog.auth.logout', {
+        url: "/logout"
+        onEnter: ['AuthManager', 'flash', '$rootScope', '$state', (authManager, flash, $rootScope, $state)->
+          authManager.logout()
+          $state.go('blog.post.list').then ->
+            flash.success = 'You was logged out'
+        ]
+      })
+      .state('blog.post.delete', {
+        url: "/post/delete/{id:[0-9]*}",
+        onEnter: ['BlogPost', 'flash', '$state', '$stateParams', (blogPost, flash, $state, $stateParams)->
+          console.log $stateParams
+          $state.go('blog.post.list').then ->
+            flash.success = 'You was logged out'
+        ]
+      })
 ])
 
 blogPost.value 'PostsPerPage', 1

@@ -2,6 +2,13 @@
 .blog-post {
   @include content-block;
 
+  .header{
+    .fa-trash{
+      margin-left: 5px;
+      color: #888888;
+      font-size: 15px;
+    }
+  }
   .rdmore {
     text-align: right;
     margin-right: 10px;
