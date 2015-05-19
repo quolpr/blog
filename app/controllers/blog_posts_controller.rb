@@ -30,6 +30,6 @@ class BlogPostsController < ApplicationController
   private
 
   def blog_post_params
-    @blog_post_params ||= params.require(:blog_post).permit( :title, :post, all_tags:[:name])
+    params.require(:blog_post).permit( :title, :post, all_tags:[:name])
   end 
 end
