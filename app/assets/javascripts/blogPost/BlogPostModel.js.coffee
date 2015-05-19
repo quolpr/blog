@@ -9,7 +9,7 @@ angular.module('blog.blogPost')
       offset = (@page-1) * @PostsPerPage
       @$http.get("/blog_posts?offset=#{offset}&limit=#{@PostsPerPage}")
     create: (title, post, tags) ->
-      @$http.post("/blog_posts", {blog_post:{title:title, post:post, tags:tags}})
+      @$http.post("/blog_posts", {blog_post:{title:title, post:post, all_tags:tags}})
     delete: (id) ->
       @$http.delete("/blog_posts/#{id}")
 ])

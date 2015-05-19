@@ -23,13 +23,13 @@ class BlogPostsController < ApplicationController
   end
 
   def create
-    @blog_post= BlogPost.create blog_post_params
+    @blog_post = BlogPost.create blog_post_params
     render status: 400 unless @blog_post.valid?
   end
 
   private
 
   def blog_post_params
-    @blog_post_params ||= params.require(:blog_post).permit( :title, :post, all_tags:[:name, :id])
+    @blog_post_params ||= params.require(:blog_post).permit( :title, :post, all_tags:[:name])
   end 
 end

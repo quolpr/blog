@@ -20,6 +20,13 @@ class Tag < ActiveRecord::Base
     tags.collect{|tag| {name:tag}}
   end 
 
+  def self.build_from_params(params)
+    params = params.collect{|tag|tag[:name]}
+    exist = where(name: params)
+    not_exist = params - exist.collect(&:name)
+    exist + not_exist.collect{|tag|new(name: tag)}
+  end
+
   def create_path
     self.path = name
   end

@@ -56,25 +56,6 @@ describe BlogPost, :unit do
     end
   end
 
-  context "#all_tags=" do
-    it 'find tags' do
-      expect(Tag).to receive(:where).with(name:'test').and_return(d = double)
-      allow(d).to receive(:first_or_create!).and_return(Tag.new)
-      subject.all_tags = [{name: 'test'}]
-    end
-
-    it 'call first_ot_create' do
-      expect(Tag).to receive_message_chain('where.first_or_create!').and_return(Tag.new)
-      subject.all_tags = [{name: 'test'}]
-    end
-
-    it 'add to tags' do
-      allow(Tag).to receive_message_chain('where.first_or_create!').and_return(d = Tag.new)
-      subject.all_tags = [{name: 'test'}]
-      expect(subject.tags).to eq [d]
-    end
-  end
-
   describe '#create_path' do
     it 'set path' do
       subject.send(:create_path)

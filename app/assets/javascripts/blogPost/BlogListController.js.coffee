@@ -9,6 +9,8 @@ angular.module('blog.blogPost')
       $scope.loading = false
       $scope.posts = data.data.blog_posts
 
+      $scope.delete = blogPost.delete
+
       $scope.pagination = {
         currentPage: $stateParams.page
         perPage: PostsPerPage

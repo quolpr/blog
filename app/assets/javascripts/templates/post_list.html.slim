@@ -4,7 +4,7 @@
     .blog-post ng-repeat='post in posts'
       h2.header
         |{{post.title}}
-        a.fa.fa-trash ng-show='isAuthed'
+        a.fa.fa-trash confirm="delete({{post.id}})" ng-show='isAuthed'
       .body btf-markdown='post.post'
       .rdmore
         a ng-click='onReadMore()' ui-sref='blog.post.show({path:post.path, id:post.id})' READ MORE

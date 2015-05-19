@@ -53,5 +53,24 @@ describe Tag, :unit do
       subject.run_callbacks(:validation)
     end
   end
+
+  describe "build_tags" do
+    let(:tag){FactoryGirl.create :tag}
+
+    context 'tag exist' do
+      it 'return exist tag' do
+        tags = Tag.build_from_params([{name: tag.name}])
+        expect(tags.first).to eq tag
+      end
+    end
+
+    context 'tag not exist' do
+      let(:new_tag){FactoryGirl.build :tag}
+      it 'create new tag' do
+        tags = Tag.build_from_params([{name: tag.name + 't'}, {name: 'test'}])
+        expect(tags.first.name).to eq tag.name + 't'
+      end
+    end
+  end
 end
 

@@ -13,11 +13,13 @@ class BlogPost < ActiveRecord::Base
             }
   
   before_validation :create_path
-
-  validates_presence_of :tags
   
   def preamble_part
     splitted_post[1] == nil ? '' : splitted_post[0]
+  end
+
+  def all_tags=(params)
+    tags << Tag.build_from_params(params)
   end
 
   def main_part
@@ -26,12 +28,6 @@ class BlogPost < ActiveRecord::Base
 
   def splitted_post
     @splitted_post ||= post.split(SPLITTER, 2)
-  end
-
-  def all_tags=(tags)
-    tags.each do |tag|
-      self.tags << Tag.where(name: tag[:name]).first_or_create!
-    end
   end
 
   private
