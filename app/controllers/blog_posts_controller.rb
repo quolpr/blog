@@ -2,9 +2,11 @@ class BlogPostsController < ApplicationController
   before_action :authorize, only:[:create, :destroy, :update]
   def index
     @blog_posts = BlogPost
+                      .includes(:tags)
                       .limit(limit)
                       .offset(offset)
                       .order('id DESC')
+
   end
  
   def update
@@ -19,7 +21,7 @@ class BlogPostsController < ApplicationController
   end
  
   def show
-    @blog_post = BlogPost.find(params[:id])
+    @blog_post = BlogPost.includes(:tags).find(params[:id])
   end
 
   def create

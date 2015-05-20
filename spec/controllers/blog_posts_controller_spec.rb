@@ -2,167 +2,133 @@ require 'rails_helper'
 
 
 describe BlogPostsController, :unit, :type => :controller do
-  let(:blog_post) {FactoryGirl.build :blog_post}
-  describe "GET 'index'" do
-    let(:params) {{'limit' => '13', 'offset' => '2'}}
-    let(:make_request) {get :index, params}
+  let(:blog_post) {FactoryGirl.create :blog_post_with_tags}
+  let(:another_blog_post) {FactoryGirl.create :blog_post_with_tags}
 
-    let(:model) {expect(BlogPost).to receive(:limit).and_return(s = spy); s}
+  
+  describe "GET 'index'" do
+    def create_posts(count)
+      FactoryGirl.create_list :blog_post_with_tags, count
+    end
 
     it "select BlogPost's by limit" do
-      expect(BlogPost).to receive(:limit).with(13).and_return(spy)
-      make_request
-    end
-    
-    it "select BlogPost's by offset" do
-      expect(model).to receive(:offset).with(2)
-      make_request
+      create_posts 2
+      get :index, limit: 1, offset: 0
+      expect(assigns(:blog_posts).count).to eq 1
     end
 
-    it "select BlogPost's by order" do
-      expect(model).to receive(:order).with('id DESC')
-      make_request
+    it "select BlogPost's by offset" do
+      create_posts 2
+      get :index, limit: 1, offset: 2
+      expect(assigns(:blog_posts).count).to eq 0
     end
 
     context 'params not set' do
-      after{get :index}
+
       it 'use default params for limit' do
-        expect(BlogPost).to receive(:limit).with(10).and_return(spy)
+        create_posts 11
+        get :index
+        expect(assigns(:blog_posts).count).to eq 10
       end
 
       it 'use default params for offset' do
-        expect(model).to receive(:offset).with(0)
+        create_posts 1
+        get :index
+        expect(assigns(:blog_posts).count).to eq 1
       end
     end
 
-    context 'response' do
-      before do
-        allow(BlogPost).to receive_message_chain('limit.offset.order')
-        make_request
-      end
-
-      it { should render_template('index') }
-      it { should respond_with(200) }
-    end
+    it {get :index; should render_template('index') }
+    it {get :index; should respond_with(200) }
   end
 
   describe "PUT 'update'" do
     before(:each) {session[:admin] = true}
-    let(:params) do 
-      {
-        'id' => '10', 
-        'blog_post' => {
-          'all_tags' => [{name: 'test'}, {name:'spec'}]
-        }
-      }
+    def make_request(id=blog_post.id)
+      put :update, id: id, blog_post: { title: 'new_tittle' }
     end
 
-    let(:make_request){put :update, params}
+    before{make_request}
 
-    it 'find post by id' do
-      expect(BlogPost).to receive(:find).with(params['id']).and_return(spy)
-      make_request
+    it 'update record' do
+      blog_post.reload
+      expect(blog_post.title).to eq 'new_tittle'
     end
 
-    it 'update attributes' do
-      expect(BlogPost).to receive_message_chain('find.update_attributes').with(params['blog_post'])
-      make_request
-    end
+    it { should respond_with(200) }
+    
 
-    context 'response' do
-      before do
-        allow(BlogPost).to receive_message_chain('find.update_attributes')
-        make_request
+    context 'not found' do
+      it 'return 404 error' do
+        make_request(blog_post.id+1)
+        expect(response.status).to eq 404
       end
-
-      it { should respond_with(200) }
     end
 
     it_behaves_like 'user not authed'
-    it_behaves_like 'not found' do
-      let(:mock_model) {allow(BlogPost).to receive(:find).and_raise(BlogTest::RecordNotFound)}
-    end
   end
 
   describe "DELETE 'destroy'" do
     before(:each) {session[:admin] = true}
-    let(:params){{'id' => '10'}}
-    let(:make_request){delete :destroy, params}
 
-    it 'find blog post' do
-      expect(BlogPost).to receive(:find).with('10').and_return(spy)
-      make_request
+    def make_request(id=blog_post.id)
+      delete :destroy, id: id
     end
 
-    it 'destroy post' do
-      expect(BlogPost).to receive_message_chain('find.destroy')
-      make_request
+    it 'delete record' do
+      blog_post
+      expect{make_request}.to change(BlogPost,:count).by(-1)
     end
 
-    context 'response' do
-      before do
-        allow(BlogPost).to receive_message_chain('find.destroy')
-        make_request
+    it { make_request; should respond_with(200) }
+    
+    context 'record not found' do
+      it 'return 404 error' do
+        make_request(blog_post.id+1)
+        expect(response.status).to eq 404
       end
-
-      it { should respond_with(200) }
     end
 
     it_behaves_like 'user not authed'
-    it_behaves_like 'not found' do
-      let(:mock_model) {allow(BlogPost).to receive(:find).and_raise(BlogTest::RecordNotFound)}
-    end
   end
 
   describe "GET 'show'" do
-    let(:params) {{id:'10'}}
-    let(:make_request){get :show, params}
+    def make_request(id=blog_post.id)
+      get :show, id:id
+    end
 
     it 'find post' do
-      expect(BlogPost).to receive(:find).with('10')
       make_request
+      expect(assigns(:blog_post)).to eq blog_post
     end
 
-    context 'response' do
-      before do 
-        allow(BlogPost).to receive(:find)
-        make_request
+    it {make_request; should render_template('show') }
+
+    context 'record not found' do
+      it 'return 404 error' do
+        make_request(blog_post.id+1)
+        expect(response.status).to eq 404
       end
-
-      it { should render_template('show') }
-    end
-
-    it_behaves_like 'not found' do
-      let(:mock_model) {allow(BlogPost).to receive(:find).and_raise(BlogTest::RecordNotFound)}
     end
   end
 
   describe "POST 'create'" do
-    let(:params){{'blog_post'=> {'title' => 'rr', 'post' => 'ff', 'all_tags' => [{name: 'test'}, {name:'spec2'}] }}}
-    let(:make_request){post :create, params}
-
     before(:each) {session[:admin] = true}
-
-    
-    it 'creates new post' do
-      expect(BlogPost).to receive(:create).with(params['blog_post']).and_return(FactoryGirl.build :blog_post_with_tags)
-      make_request
+    def make_request
+      params =  FactoryGirl.attributes_for(:blog_post)
+      params[:all_tags] = [{name: 'test'}]
+      post :create, blog_post: params
     end
 
-    context 'response' do
-      let(:mock_model){allow(BlogPost).to receive(:create).and_return(FactoryGirl.build :blog_post_with_tags)}
-      before do 
-        mock_model
-        make_request
-      end
+    it 'creates new post' do
+      expect{make_request}.to change(BlogPost,:count).by(1)
+    end
 
-      context 'not valid data' do
-        let(:mock_model){allow(BlogPost).to receive(:create).and_return(FactoryGirl.build :bad_blog_post)}
-        it {should respond_with(400)}
-        it {should render_template('create')}
-      end
+    it {make_request;should respond_with(200)}
 
-      it {should respond_with(200)}
+    context 'data not valid' do
+      before{post :create, blog_post:{title: 't'}}
+      it {should respond_with(400)}
       it {should render_template('create')}
     end
 

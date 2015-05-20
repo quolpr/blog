@@ -9,17 +9,7 @@ class Tag < ActiveRecord::Base
             }, uniqueness: {
                 message: ValidationError::NOT_UNIQUE
             }
-
-  def self.normalize_params(tags)
-    tags = tags.map(&:values).flatten
-    tags = tags
-            .collect(&:strip)
-            .compact
-            .uniq
-            .reject{|el| el.empty?}
-    tags.collect{|tag| {name:tag}}
-  end 
-
+          
   def self.build_from_params(params)
     params = params.collect{|tag|tag[:name]}
     exist = where(name: params)

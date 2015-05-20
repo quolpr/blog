@@ -14,7 +14,7 @@
           |{{post.created_at | date : 'medium'}}
         .fa.fa-tags
         .tag ng-repeat='tag in post.tags'
-          a href='#tag/{{tag.path}}_{{tag.id}}' {{tag.name}}
+          a href='#tag/{{tag.path}}' {{tag.name}}
   .info-block.pagin
     
     pagination items-per-page='pagination.perPage' total-items="pagination.count" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" ng-change="pagination.pageChanged()"

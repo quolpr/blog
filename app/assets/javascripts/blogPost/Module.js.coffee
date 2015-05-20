@@ -52,4 +52,4 @@ blogPost.config([ '$stateProvider', '$urlRouterProvider',
       })
 ])
 
-blogPost.value 'PostsPerPage', 1
+blogPost.value 'PostsPerPage', 10

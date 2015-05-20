@@ -6,38 +6,9 @@ describe Tag, :unit do
   it{should have_and_belong_to_many :blog_posts}
 
   subject{Tag.new(name:'test')}
+  
   let(:tags) do
     [{name: 'test'}, {name:'tag'}]
-  end
-
-  describe '#normalize_params' do
-  	let(:tags) {[{name: 'test'}, {name:'tag'}]}
-    let(:result) {[
-        {name: 'test'},
-        {name: 'tag'}
-    ]}
-
-    context 'parsing tags' do
-      def check_it
-        expect(Tag.normalize_params(tags)).to eq result
-      end
-      
-      context 'has repeated tags' do
-        let (:tags) {[{name: 'test'}, {name: 'test'}, {name:'tag'}]}
-
-        it 'cut down their' do
-          check_it
-        end
-      end
-
-      context 'has empty tag' do
-        let (:tags) {[{name: 'test'}, {name: ' '}, {name:'tag'}]}
-
-        it 'cut down their' do
-          check_it
-        end
-      end
-    end
   end
 
   describe '#create_path' do

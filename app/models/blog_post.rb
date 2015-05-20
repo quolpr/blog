@@ -2,6 +2,7 @@ class BlogPost < ActiveRecord::Base
   SPLITTER = "~~~~~".freeze
 
   has_and_belongs_to_many :tags
+  validates_presence_of :tags
 
   validates :post, length: {minimum: 10, too_short: ValidationError::TOO_SHORT}
   validates :title,
@@ -14,12 +15,14 @@ class BlogPost < ActiveRecord::Base
   
   before_validation :create_path
   
-  def preamble_part
-    splitted_post[1] == nil ? '' : splitted_post[0]
-  end
+  
 
   def all_tags=(params)
     tags << Tag.build_from_params(params)
+  end
+
+  def preamble_part
+    splitted_post[1] == nil ? '' : splitted_post[0]
   end
 
   def main_part
