@@ -4,3 +4,5 @@ before_script:
   - cp config/database.yml.travis config/database.yml
   - cp config/secrets.yml.example config/secrets.yml
   - psql -c 'create database travis_ci_test;' -U postgres
+language: ruby
+  - 2.1-head
